@@ -99,7 +99,9 @@
             <TextBox    Grid.Row="6" Grid.Column="1" Margin="3" Height="100"  TextWrapping="Wrap" AcceptsReturn="True" x:Name="ResponseHeader" VerticalAlignment="Bottom"></TextBox>
             <Label      Grid.Row="7" Grid.Column="0" Margin="3" Content="Response Body:"></Label>
             <TextBox    Grid.Row="7" Grid.Column="1" Margin="3" Height="200"  TextWrapping="Wrap" AcceptsReturn="True" x:Name="ResponseBody" VerticalAlignment="Bottom"></TextBox>
-            <TextBlock Grid.Row="8" Grid.Column="1" Margin="3" TextAlignment="Right" Text="About"></TextBlock>
+            <TextBlock  Grid.Row="8" Grid.Column="1" Margin="3" TextAlignment="Right">
+                <Hyperlink NavigateUri="https://github.com/kirbycope/RESTful/wiki" RequestNavigate="Hyperlink_RequestNavigate">About</Hyperlink>
+            </TextBlock>
         </Grid>
     </Grid>
 </Window>

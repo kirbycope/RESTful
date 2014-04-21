@@ -157,6 +157,12 @@ namespace RESTful
             }
         }
 
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
         void SaveRequestInputs()
         {
             RESTful.Properties.Settings.Default.Protocol = Protocol.SelectedValue.ToString();
