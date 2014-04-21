@@ -8,4 +8,4 @@ Alpha release 04/20/2014.
  - Needs better/more error handling
 
 License:
-Completely free and opem source.
+Completely free and open source.
