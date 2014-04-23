@@ -44,7 +44,7 @@ namespace RESTful
                     // Define the RequestUri
                     if ((requestUri != null) && (requestUri != "")) { request.RequestUri = new Uri(requestUri); }
                     // Define the Headers
-                    foreach (var header in RequestHeaders.List(requestHeaders)) { request.Headers.Add(header.Key, header.Value); }
+                    foreach (var header in RequestHeaders.StringToDict(requestHeaders)) { request.Headers.Add(header.Key, header.Value); }
                     // Define the HttpContent
                     if ((requestBody != null) && (requestBody != "")) { request.Content = RequestBody.Body(requestBody); }
                     // TODO: Implement Properties

@@ -24,6 +24,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
@@ -52,10 +53,34 @@
                 <Button     Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Left" MinWidth="80" Name="AttachmentBrowseButton" Content="Browse" Click="AttachmentBrowse_Click"></Button>
             </Grid>
             <Label      Grid.Row="6" Grid.Column="0" Margin="3" Content="Request Head:"></Label>
-            <TextBox    Grid.Row="6" Grid.Column="1" Margin="3" Height="100" TextWrapping="Wrap" AcceptsReturn="True" x:Name="RequestHeader" Text="{Binding Source={x:Static p:Settings.Default}, Path=RequestHeader}"></TextBox>
-            <Label      Grid.Row="7" Grid.Column="0" Margin="3" Content="Request Body:"></Label>
-            <TextBox    Grid.Row="7" Grid.Column="1" Margin="3" Height="200" TextWrapping="Wrap" AcceptsReturn="True" x:Name="RequestBody" Text="{Binding Source={x:Static p:Settings.Default}, Path=RequestBody}"></TextBox>
-            <Button     Grid.Row="8" Grid.Column="1" Margin="3" HorizontalAlignment="Right" MinWidth="80" Content="Submit" Click="submit_Button"></Button>
+            <!-- Grid to split cell -->
+            <Grid Grid.Row="6" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <Button     Grid.Row="0" Grid.Column="0" Margin="3" Width="Auto" HorizontalAlignment="Left" Content="Add New Header" Click="AddHeader_Click"></Button>
+                <Button     Grid.Row="0" Grid.Column="1" Margin="3" Width="Auto" HorizontalAlignment="Right" Content="Remove All Headers" Click="ClearHeader_Click"></Button>
+            </Grid>
+            <ScrollViewer Grid.Row="7" Grid.Column="1" MinHeight="23"  Height="70">
+                <!-- Grid to split cell -->
+                <Grid Name="headerGrid" Loaded="PopulateHeaders">
+                    <Grid.RowDefinitions>
+                        
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140"/>
+                        <ColumnDefinition Width="140"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
+            <!--<TextBox    Grid.Row="6" Grid.Column="1" Margin="3" Height="100" TextWrapping="Wrap" AcceptsReturn="True" x:Name="RequestHeader" Text="{Binding Source={x:Static p:Settings.Default}, Path=RequestHeader}"></TextBox>-->
+            <Label      Grid.Row="8" Grid.Column="0" Margin="3" Content="Request Body:"></Label>
+            <TextBox    Grid.Row="8" Grid.Column="1" Margin="3" Height="200" TextWrapping="Wrap" AcceptsReturn="True" x:Name="RequestBody" Text="{Binding Source={x:Static p:Settings.Default}, Path=RequestBody}"></TextBox>
+            <Button     Grid.Row="9" Grid.Column="1" Margin="3" HorizontalAlignment="Right" MinWidth="80" Content="Submit" Click="submit_Button"></Button>
         </Grid>
         <!-- Top Right (Child) grid -->
         <Grid Grid.Row="0" Grid.Column="1">
@@ -93,7 +118,7 @@
             <Label      Grid.Row="3" Grid.Column="0" Margin="3" Content="Format:"></Label>
             <ComboBox   Grid.Row="3" Grid.Column="2" Margin="3" x:Name="Format" Loaded="PopulateFormats" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Format}"></ComboBox>
             <Label      Grid.Row="4" Grid.Column="0" Margin="3" Content=" "></Label>
-            <Button     Grid.Row="4" Grid.Column="1" Margin="3" HorizontalAlignment="Right" MinWidth="160" Name="PopulateRequestBody" Content="Populate Request Body" Click="PopulateRequestBody_Click"></Button>
+            <Button     Grid.Row="4" Grid.Column="1" Margin="3" HorizontalAlignment="Right" Width="150" Name="PopulateRequestBody" Content="Populate Request Body" Click="PopulateRequestBody_Click"></Button>
             <Label      Grid.Row="5" Grid.Column="0" Margin="3" Content=" "></Label>
             <Label      Grid.Row="6" Grid.Column="0" Margin="3" Content="Response Head:"></Label>
             <TextBox    Grid.Row="6" Grid.Column="1" Margin="3" Height="100"  TextWrapping="Wrap" AcceptsReturn="True" x:Name="ResponseHeader" VerticalAlignment="Bottom"></TextBox>

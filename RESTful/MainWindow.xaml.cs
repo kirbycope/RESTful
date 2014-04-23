@@ -39,6 +39,75 @@ namespace RESTful
             comboBox.ItemsSource = HTTPProtocols.HTTPProtocolsList;
         }
 
+        private void PopulateHeaders(object sender, RoutedEventArgs e)
+        {
+            // Get the saved headers string
+            string requestHeaders = RESTful.Properties.Settings.Default.RequestHeader;
+
+            if ((requestHeaders != null ) && (requestHeaders != ""))
+            {
+                // Convert the string to a Dictionary<string, string> type
+                Dictionary<string, string> dict = RequestHeaders.StringToDict(requestHeaders);
+
+                for (int i = 0; i < dict.Count; i++)
+                {
+                    // Add a row to the headerGrid
+                    RowDefinition rowDefinition = new RowDefinition();
+                    rowDefinition.Height = GridLength.Auto;
+                    headerGrid.RowDefinitions.Add(rowDefinition);
+
+                    // Add a header/key textbox
+                    TextBox header = new TextBox();
+                    header.SetValue(Grid.RowProperty, i);
+                    header.SetValue(Grid.ColumnProperty, 0);
+                    header.Name = String.Format("requestHeaderKey{0}", i);
+                    header.Text = dict.ElementAt(i).Key;
+                    headerGrid.Children.Add(header);
+
+                    // Add a value textbox
+                    TextBox value = new TextBox();
+                    value.SetValue(Grid.RowProperty, i);
+                    value.SetValue(Grid.ColumnProperty, 1);
+                    value.Name = String.Format("requestHeaderValue{0}", i);
+                    value.Text = dict.ElementAt(i).Value;
+                    headerGrid.Children.Add(value);
+                }
+            }
+        }
+
+        private void AddHeader_Click(object sender, RoutedEventArgs e)
+        {
+            // Get Current Header count
+            int headerCount = headerGrid.RowDefinitions.Count;
+
+            // Add a row to the headerGrid
+            RowDefinition rowDefinition = new RowDefinition();
+            rowDefinition.Height = GridLength.Auto;
+            headerGrid.RowDefinitions.Add(rowDefinition);
+
+            // Add a header/key textbox
+            TextBox header = new TextBox();
+            header.SetValue(Grid.RowProperty, headerCount);
+            header.SetValue(Grid.ColumnProperty, 0);
+            header.Name = String.Format("requestHeaderKey{0}", headerCount);
+            header.Text = "";
+            headerGrid.Children.Add(header);
+
+            // Add a value textbox
+            TextBox value = new TextBox();
+            value.SetValue(Grid.RowProperty, headerCount);
+            value.SetValue(Grid.ColumnProperty, 1);
+            value.Name = String.Format("requestHeaderValue{0}", headerCount);
+            value.Text = "";
+            headerGrid.Children.Add(value);
+        }
+
+        
+        private void ClearHeader_Click(object sender, RoutedEventArgs e)
+        {
+            headerGrid.Children.Clear();
+        }
+
         private void HTTPVerb(object sender, RoutedEventArgs e)
         {
             // Get the ComboBox reference
@@ -170,7 +239,7 @@ namespace RESTful
             RESTful.Properties.Settings.Default.BaseAddress = BaseAddress.Text;
             RESTful.Properties.Settings.Default.Resource = Resource.Text;
             RESTful.Properties.Settings.Default.AttachmentFile = AttachmentFilePath.Text;
-            RESTful.Properties.Settings.Default.RequestHeader = RequestHeader.Text;
+            RESTful.Properties.Settings.Default.RequestHeader = RequestHeaders.DictToString(RequestHeaders.GridToDictionary(headerGrid));
             RESTful.Properties.Settings.Default.RequestBody = RequestBody.Text;
             RESTful.Properties.Settings.Default.Save();
         }
@@ -181,6 +250,11 @@ namespace RESTful
             RESTful.Properties.Settings.Default.Type = Types.SelectedValue.ToString()?? "";
             RESTful.Properties.Settings.Default.Format = Format.SelectedValue.ToString() ?? "";
             RESTful.Properties.Settings.Default.Save();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }
