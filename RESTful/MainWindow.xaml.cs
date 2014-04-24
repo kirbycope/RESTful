@@ -189,7 +189,7 @@ namespace RESTful
             SaveImportInputs();
 
             // Ensure user defined inputs have value
-            if ((AssemblyFilePath.Text != null) && (Types.SelectedValue != null) && (Types.SelectedValue.ToString() != ""))
+            if ((AssemblyFilePath.Text != null) && (Types.SelectedValue != null) && (Types.SelectedValue.ToString() != "") && (Format.Text != null) && (Format.Text != ""))
             {
                 if (Format.SelectedValue.ToString() == "JSON")
                 {
