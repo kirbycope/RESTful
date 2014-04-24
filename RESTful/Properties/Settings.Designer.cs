@@ -142,5 +142,17 @@ namespace RESTful.Properties {
                 this["AttachmentFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AuthenticationMethod {
+            get {
+                return ((string)(this["AuthenticationMethod"]));
+            }
+            set {
+                this["AuthenticationMethod"] = value;
+            }
+        }
     }
 }

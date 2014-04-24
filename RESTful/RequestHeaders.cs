@@ -20,7 +20,7 @@ namespace RESTful
             // Get Current Header count
             int headerCount = headerGrid.RowDefinitions.Count;
 
-            if (headerCount > 0)
+            if ((headerCount > 0) && (RESTful.Properties.Settings.Default.RequestHeader != null) && (RESTful.Properties.Settings.Default.RequestHeader != ""))
             {
                 for (int i = 0; i < headerCount; i++)
                 {
@@ -82,8 +82,15 @@ namespace RESTful
 
                 if ((keyValues.ElementAt(0) != null) && (keyValues.ElementAt(0) != "") && (keyValues.ElementAt(1) != null) && (keyValues.ElementAt(1) != ""))
                 {
-                    // Save to the dictionary
-                    dict.Add(keyValues.ElementAt(0), keyValues.ElementAt(1));
+                    try
+                    {
+                        // Save to the dictionary
+                        dict.Add(keyValues.ElementAt(0), keyValues.ElementAt(1));
+                    }
+                    catch
+                    {
+                        dict = null;
+                    }
                 }
             }
 

@@ -30,6 +30,32 @@ namespace RESTful
             InitializeComponent();
         }
 
+        private void AuthenticationMethod(object sender, RoutedEventArgs e)
+        {
+            // Get the ComboBox reference
+            var comboBox = sender as ComboBox;
+
+            // Assign the list from HTTPProtocols.cs to the ItemsSource
+            comboBox.ItemsSource = AuthenticationMethods.AuthenticationMethodsList;
+        }
+
+        private void BuildAuthentication_Click(object sender, RoutedEventArgs e)
+        {
+            // Ensure "None" is not selected and that something else is selected
+            if ((Authentication.SelectedValue.ToString() != "None") && (Authentication.SelectedValue != null) && (Authentication.SelectedValue.ToString() != ""))
+            {
+                // Save the selected authentication value to Settings
+                RESTful.Properties.Settings.Default.AuthenticationMethod = Authentication.SelectedValue.ToString();
+                // Save the current header value(s) to Settings
+                RESTful.Properties.Settings.Default.RequestHeader = RequestHeaders.DictToString(RequestHeaders.GridToDictionary(headerGrid));
+                RESTful.Properties.Settings.Default.Save();
+
+                // Open the AuthenticationWindow
+                var window = new AuthenticationWindow();
+                window.Show();
+            }
+        }
+
         private void HTTPProtocol(object sender, RoutedEventArgs e)
         {
             // Get the ComboBox reference
@@ -39,7 +65,7 @@ namespace RESTful
             comboBox.ItemsSource = HTTPProtocols.HTTPProtocolsList;
         }
 
-        private void PopulateHeaders(object sender, RoutedEventArgs e)
+        public void PopulateHeaders(object sender, RoutedEventArgs e)
         {
             // Get the saved headers string
             string requestHeaders = RESTful.Properties.Settings.Default.RequestHeader;
@@ -49,28 +75,31 @@ namespace RESTful
                 // Convert the string to a Dictionary<string, string> type
                 Dictionary<string, string> dict = RequestHeaders.StringToDict(requestHeaders);
 
-                for (int i = 0; i < dict.Count; i++)
+                if (dict != null)
                 {
-                    // Add a row to the headerGrid
-                    RowDefinition rowDefinition = new RowDefinition();
-                    rowDefinition.Height = GridLength.Auto;
-                    headerGrid.RowDefinitions.Add(rowDefinition);
+                    for (int i = 0; i < dict.Count; i++)
+                    {
+                        // Add a row to the headerGrid
+                        RowDefinition rowDefinition = new RowDefinition();
+                        rowDefinition.Height = GridLength.Auto;
+                        headerGrid.RowDefinitions.Add(rowDefinition);
 
-                    // Add a header/key textbox
-                    TextBox header = new TextBox();
-                    header.SetValue(Grid.RowProperty, i);
-                    header.SetValue(Grid.ColumnProperty, 0);
-                    header.Name = String.Format("requestHeaderKey{0}", i);
-                    header.Text = dict.ElementAt(i).Key;
-                    headerGrid.Children.Add(header);
+                        // Add a header/key textbox
+                        TextBox header = new TextBox();
+                        header.SetValue(Grid.RowProperty, i);
+                        header.SetValue(Grid.ColumnProperty, 0);
+                        header.Name = String.Format("requestHeaderKey{0}", i);
+                        header.Text = dict.ElementAt(i).Key;
+                        headerGrid.Children.Add(header);
 
-                    // Add a value textbox
-                    TextBox value = new TextBox();
-                    value.SetValue(Grid.RowProperty, i);
-                    value.SetValue(Grid.ColumnProperty, 1);
-                    value.Name = String.Format("requestHeaderValue{0}", i);
-                    value.Text = dict.ElementAt(i).Value;
-                    headerGrid.Children.Add(value);
+                        // Add a value textbox
+                        TextBox value = new TextBox();
+                        value.SetValue(Grid.RowProperty, i);
+                        value.SetValue(Grid.ColumnProperty, 1);
+                        value.Name = String.Format("requestHeaderValue{0}", i);
+                        value.Text = dict.ElementAt(i).Value;
+                        headerGrid.Children.Add(value);
+                    }
                 }
             }
         }
@@ -105,7 +134,12 @@ namespace RESTful
         
         private void ClearHeader_Click(object sender, RoutedEventArgs e)
         {
+            // Clear headers
             headerGrid.Children.Clear();
+
+            // Update settings
+            RESTful.Properties.Settings.Default.RequestHeader = null;
+            RESTful.Properties.Settings.Default.Save();
         }
 
         private void HTTPVerb(object sender, RoutedEventArgs e)
@@ -234,6 +268,7 @@ namespace RESTful
 
         void SaveRequestInputs()
         {
+            RESTful.Properties.Settings.Default.AuthenticationMethod = Authentication.SelectedValue.ToString();
             RESTful.Properties.Settings.Default.Protocol = Protocol.SelectedValue.ToString();
             RESTful.Properties.Settings.Default.Method = Method.SelectedValue.ToString();
             RESTful.Properties.Settings.Default.BaseAddress = BaseAddress.Text;

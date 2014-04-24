@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:p="clr-namespace:RESTful.Properties"
-        Title="RESTful" Height="570" Width="820">
+        Title="RESTful" Height="600" Width="820">
     <!-- Parent Grid -->
     <Grid>
         <Grid.RowDefinitions>
@@ -25,23 +25,37 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
             <Label      Grid.Row="0" Grid.Column="0" Margin="3" Content="Request Builder"></Label>
-            <Label      Grid.Row="1" Grid.Column="0" Margin="3" Content="Protocol:"></Label>
-            <ComboBox   Grid.Row="1" Grid.Column="1" Margin="3" x:Name="Protocol" Loaded="HTTPProtocol" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Protocol}"></ComboBox>
-            <Label      Grid.Row="2" Grid.Column="0" Margin="3" Content="Method:"></Label>
-            <ComboBox   Grid.Row="2" Grid.Column="1" Margin="3" x:Name="Method" Loaded="HTTPVerb" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Method}"></ComboBox>
-            <Label      Grid.Row="3" Grid.Column="0" Margin="3" Content="BaseAddress:"></Label>
-            <TextBox    Grid.Row="3" Grid.Column="1" Margin="3" x:Name="BaseAddress" Text="{Binding Source={x:Static p:Settings.Default}, Path=BaseAddress}"></TextBox>
-            <Label      Grid.Row="4" Grid.Column="0" Margin="3" Content="Resource:"></Label>
-            <TextBox    Grid.Row="4" Grid.Column="1" Margin="3" x:Name="Resource" Text="{Binding Source={x:Static p:Settings.Default}, Path=Resource}"></TextBox>
-            <Label      Grid.Row="5" Grid.Column="0" Margin="3" Content="Attachment:"></Label>
+            <Label      Grid.Row="1" Grid.Column="0" Margin="3" Content="Authentication"></Label>
             <!-- Grid to split cell -->
-            <Grid Grid.Row="5" Grid.Column="1">
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox   Grid.Row="0" Grid.Column="0" Margin="3" x:Name="Authentication" Loaded="AuthenticationMethod" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=AuthenticationMethod}"></ComboBox>
+                <Button     Grid.Row="0" Grid.Column="1" Margin="3" Content="Build Authentication" Click="BuildAuthentication_Click"></Button>
+            </Grid>
+            <Label      Grid.Row="2" Grid.Column="0" Margin="3" Content="Protocol:"></Label>
+            <ComboBox   Grid.Row="2" Grid.Column="1" Margin="3" x:Name="Protocol" Loaded="HTTPProtocol" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Protocol}"></ComboBox>
+            <Label      Grid.Row="3" Grid.Column="0" Margin="3" Content="Method:"></Label>
+            <ComboBox   Grid.Row="3" Grid.Column="1" Margin="3" x:Name="Method" Loaded="HTTPVerb" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Method}"></ComboBox>
+            <Label      Grid.Row="4" Grid.Column="0" Margin="3" Content="BaseAddress:"></Label>
+            <TextBox    Grid.Row="4" Grid.Column="1" Margin="3" x:Name="BaseAddress" Text="{Binding Source={x:Static p:Settings.Default}, Path=BaseAddress}"></TextBox>
+            <Label      Grid.Row="5" Grid.Column="0" Margin="3" Content="Resource:"></Label>
+            <TextBox    Grid.Row="5" Grid.Column="1" Margin="3" x:Name="Resource" Text="{Binding Source={x:Static p:Settings.Default}, Path=Resource}"></TextBox>
+            <Label      Grid.Row="6" Grid.Column="0" Margin="3" Content="Attachment:"></Label>
+            <!-- Grid to split cell -->
+            <Grid Grid.Row="6" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -52,9 +66,9 @@
                 <TextBox    Grid.Row="0" Grid.Column="0" Margin="3" x:Name="AttachmentFilePath" Text="{Binding Source={x:Static p:Settings.Default}, Path=AttachmentFile}"></TextBox>
                 <Button     Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Left" MinWidth="80" Name="AttachmentBrowseButton" Content="Browse" Click="AttachmentBrowse_Click"></Button>
             </Grid>
-            <Label      Grid.Row="6" Grid.Column="0" Margin="3" Content="Request Head:"></Label>
+            <Label      Grid.Row="7" Grid.Column="0" Margin="3" Content="Request Head:"></Label>
             <!-- Grid to split cell -->
-            <Grid Grid.Row="6" Grid.Column="1">
+            <Grid Grid.Row="7" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -62,10 +76,10 @@
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="150"/>
                 </Grid.ColumnDefinitions>
-                <Button     Grid.Row="0" Grid.Column="0" Margin="3" Width="Auto" HorizontalAlignment="Left" Content="Add New Header" Click="AddHeader_Click"></Button>
-                <Button     Grid.Row="0" Grid.Column="1" Margin="3" Width="Auto" HorizontalAlignment="Right" Content="Remove All Headers" Click="ClearHeader_Click"></Button>
+                <Button     Grid.Row="0" Grid.Column="0" Margin="3" Content="Add New Header" Click="AddHeader_Click"></Button>
+                <Button     Grid.Row="0" Grid.Column="1" Margin="3" Content="Remove All Headers" Click="ClearHeader_Click"></Button>
             </Grid>
-            <ScrollViewer Grid.Row="7" Grid.Column="1" MinHeight="23"  Height="70">
+            <ScrollViewer Grid.Row="8" Grid.Column="1" MinHeight="23"  Height="70" VerticalScrollBarVisibility="Auto">
                 <!-- Grid to split cell -->
                 <Grid Name="headerGrid" Loaded="PopulateHeaders">
                     <Grid.RowDefinitions>
@@ -78,13 +92,14 @@
                 </Grid>
             </ScrollViewer>
             <!--<TextBox    Grid.Row="6" Grid.Column="1" Margin="3" Height="100" TextWrapping="Wrap" AcceptsReturn="True" x:Name="RequestHeader" Text="{Binding Source={x:Static p:Settings.Default}, Path=RequestHeader}"></TextBox>-->
-            <Label      Grid.Row="8" Grid.Column="0" Margin="3" Content="Request Body:"></Label>
-            <TextBox    Grid.Row="8" Grid.Column="1" Margin="3" Height="200" TextWrapping="Wrap" AcceptsReturn="True" x:Name="RequestBody" Text="{Binding Source={x:Static p:Settings.Default}, Path=RequestBody}"></TextBox>
-            <Button     Grid.Row="9" Grid.Column="1" Margin="3" HorizontalAlignment="Right" MinWidth="80" Content="Submit" Click="submit_Button"></Button>
+            <Label      Grid.Row="9" Grid.Column="0" Margin="3" Content="Request Body:"></Label>
+            <TextBox    Grid.Row="9" Grid.Column="1" Margin="3" Height="200" TextWrapping="Wrap" AcceptsReturn="True" x:Name="RequestBody" Text="{Binding Source={x:Static p:Settings.Default}, Path=RequestBody}"></TextBox>
+            <Button     Grid.Row="10" Grid.Column="1" Margin="3" HorizontalAlignment="Right" MinWidth="80" Content="Submit" Click="submit_Button"></Button>
         </Grid>
         <!-- Top Right (Child) grid -->
         <Grid Grid.Row="0" Grid.Column="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -120,11 +135,12 @@
             <Label      Grid.Row="4" Grid.Column="0" Margin="3" Content=" "></Label>
             <Button     Grid.Row="4" Grid.Column="1" Margin="3" HorizontalAlignment="Right" Width="150" Name="PopulateRequestBody" Content="Populate Request Body" Click="PopulateRequestBody_Click"></Button>
             <Label      Grid.Row="5" Grid.Column="0" Margin="3" Content=" "></Label>
-            <Label      Grid.Row="6" Grid.Column="0" Margin="3" Content="Response Head:"></Label>
-            <TextBox    Grid.Row="6" Grid.Column="1" Margin="3" Height="100"  TextWrapping="Wrap" AcceptsReturn="True" x:Name="ResponseHeader" VerticalAlignment="Bottom"></TextBox>
-            <Label      Grid.Row="7" Grid.Column="0" Margin="3" Content="Response Body:"></Label>
-            <TextBox    Grid.Row="7" Grid.Column="1" Margin="3" Height="200"  TextWrapping="Wrap" AcceptsReturn="True" x:Name="ResponseBody" VerticalAlignment="Bottom"></TextBox>
-            <TextBlock  Grid.Row="8" Grid.Column="1" Margin="3" TextAlignment="Right">
+            <Label      Grid.Row="6" Grid.Column="0" Margin="3" Content=" "></Label>
+            <Label      Grid.Row="7" Grid.Column="0" Margin="3" Content="Response Head:"></Label>
+            <TextBox    Grid.Row="7" Grid.Column="1" Margin="3" Height="100"  TextWrapping="Wrap" AcceptsReturn="True" x:Name="ResponseHeader" VerticalAlignment="Bottom" IsReadOnly="True"></TextBox>
+            <Label      Grid.Row="8" Grid.Column="0" Margin="3" Content="Response Body:"></Label>
+            <TextBox    Grid.Row="8" Grid.Column="1" Margin="3" Height="200"  TextWrapping="Wrap" AcceptsReturn="True" x:Name="ResponseBody" VerticalAlignment="Bottom" IsReadOnly="True"></TextBox>
+            <TextBlock  Grid.Row="9" Grid.Column="1" Margin="3" TextAlignment="Right">
                 <Hyperlink NavigateUri="https://github.com/kirbycope/RESTful/wiki" RequestNavigate="Hyperlink_RequestNavigate">About</Hyperlink>
             </TextBlock>
         </Grid>

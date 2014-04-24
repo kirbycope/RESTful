@@ -21,6 +21,7 @@ namespace RESTful
         {
             // Get inputs from saved settings
             /// Input Settings
+            string authenticationMethod = RESTful.Properties.Settings.Default.AuthenticationMethod;
             string version = RESTful.Properties.Settings.Default.Protocol;
             string httpMethod = RESTful.Properties.Settings.Default.Method;
             string baseAddress = RESTful.Properties.Settings.Default.BaseAddress;
