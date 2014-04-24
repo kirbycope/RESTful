@@ -89,6 +89,7 @@ namespace RESTful
                     }
                     catch
                     {
+                        // Temp safe guard against adding dupes error
                         dict = null;
                     }
                 }
