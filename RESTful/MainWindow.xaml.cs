@@ -65,6 +65,40 @@ namespace RESTful
             comboBox.ItemsSource = HTTPProtocols.HTTPProtocolsList;
         }
 
+        public void PopulateURI(object sender, RoutedEventArgs e)
+        {
+            // Set text to saved URI
+            URI.Text = RESTful.Properties.Settings.Default.URI;
+        }
+
+        private void AddParameter_Click(object sender, RoutedEventArgs e)
+        {
+            // Ensure a URI exists
+            if ((URI.Text != null) && (URI.Text != ""))
+            {
+                // Save the URI value to Settings
+                RESTful.Properties.Settings.Default.URI = URI.Text;
+                RESTful.Properties.Settings.Default.Save();
+
+                // Open the ParameterWindow
+                var window = new ParameterWindow();
+                window.Show();
+            }
+        }
+
+        private void ClearParameter_Click(object sender, RoutedEventArgs e)
+        {
+            if ((URI.Text != null) && (URI.Text != "") && (URI.Text.Contains('?')))
+            {
+                // Scrub Parameters from URI
+                URI.Text = URI.Text.Remove(URI.Text.IndexOf("?"));
+
+                // Save the URI value to Settings
+                RESTful.Properties.Settings.Default.URI = URI.Text;
+                RESTful.Properties.Settings.Default.Save();
+            }
+        }
+
         public void PopulateHeaders(object sender, RoutedEventArgs e)
         {
             // Get the saved headers string
@@ -271,8 +305,7 @@ namespace RESTful
             RESTful.Properties.Settings.Default.AuthenticationMethod = Authentication.SelectedValue.ToString();
             RESTful.Properties.Settings.Default.Protocol = Protocol.SelectedValue.ToString();
             RESTful.Properties.Settings.Default.Method = Method.SelectedValue.ToString();
-            RESTful.Properties.Settings.Default.BaseAddress = BaseAddress.Text;
-            RESTful.Properties.Settings.Default.Resource = Resource.Text;
+            RESTful.Properties.Settings.Default.URI = URI.Text;
             RESTful.Properties.Settings.Default.AttachmentFile = AttachmentFilePath.Text;
             RESTful.Properties.Settings.Default.RequestHeader = RequestHeaders.DictToString(RequestHeaders.GridToDictionary(headerGrid));
             RESTful.Properties.Settings.Default.RequestBody = RequestBody.Text;

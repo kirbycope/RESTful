@@ -24,9 +24,7 @@ namespace RESTful
             string authenticationMethod = RESTful.Properties.Settings.Default.AuthenticationMethod;
             string version = RESTful.Properties.Settings.Default.Protocol;
             string httpMethod = RESTful.Properties.Settings.Default.Method;
-            string baseAddress = RESTful.Properties.Settings.Default.BaseAddress;
-            string resource = RESTful.Properties.Settings.Default.Resource;
-            string requestUri = String.Format("{0}{1}", baseAddress, resource);
+            string requestUri = RESTful.Properties.Settings.Default.URI;
             string attachment = RESTful.Properties.Settings.Default.AttachmentFile;
             string requestHeaders = RESTful.Properties.Settings.Default.RequestHeader;
             string requestBody = RESTful.Properties.Settings.Default.RequestBody;

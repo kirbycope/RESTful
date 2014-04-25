@@ -26,12 +26,12 @@ namespace RESTful.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string BaseAddress {
+        public string URI {
             get {
-                return ((string)(this["BaseAddress"]));
+                return ((string)(this["URI"]));
             }
             set {
-                this["BaseAddress"] = value;
+                this["URI"] = value;
             }
         }
         
@@ -44,18 +44,6 @@ namespace RESTful.Properties {
             }
             set {
                 this["Method"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Resource {
-            get {
-                return ((string)(this["Resource"]));
-            }
-            set {
-                this["Resource"] = value;
             }
         }
         

@@ -49,10 +49,22 @@
             <ComboBox   Grid.Row="2" Grid.Column="1" Margin="3" x:Name="Protocol" Loaded="HTTPProtocol" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Protocol}"></ComboBox>
             <Label      Grid.Row="3" Grid.Column="0" Margin="3" Content="Method:"></Label>
             <ComboBox   Grid.Row="3" Grid.Column="1" Margin="3" x:Name="Method" Loaded="HTTPVerb" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Method}"></ComboBox>
-            <Label      Grid.Row="4" Grid.Column="0" Margin="3" Content="BaseAddress:"></Label>
-            <TextBox    Grid.Row="4" Grid.Column="1" Margin="3" x:Name="BaseAddress" Text="{Binding Source={x:Static p:Settings.Default}, Path=BaseAddress}"></TextBox>
-            <Label      Grid.Row="5" Grid.Column="0" Margin="3" Content="Resource:"></Label>
-            <TextBox    Grid.Row="5" Grid.Column="1" Margin="3" x:Name="Resource" Text="{Binding Source={x:Static p:Settings.Default}, Path=Resource}"></TextBox>
+            <Label      Grid.Row="4" Grid.Column="0" Margin="3" Content="URI:"></Label>
+            <TextBox    Grid.Row="4" Grid.Column="1" Margin="3" x:Name="URI" Text="{Binding Source={x:Static p:Settings.Default}, Path=URI}"></TextBox>
+            <Label      Grid.Row="5" Grid.Column="0" Margin="3" Content="Parameter(s):"></Label>
+            <!-- Grid to split cell -->
+            <Grid Grid.Row="5" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+                <Button     Grid.Row="0" Grid.Column="0" Margin="3" Content="Add New Parameter" Click="AddParameter_Click"></Button>
+                <Button     Grid.Row="0" Grid.Column="1" Margin="3" Content="Remove All Parameters" Click="ClearParameter_Click"></Button>
+            </Grid>
+            <!--<TextBox    Grid.Row="5" Grid.Column="1" Margin="3" x:Name="Resource" Text="{Binding Source={x:Static p:Settings.Default}, Path=Resource}"></TextBox>-->
             <Label      Grid.Row="6" Grid.Column="0" Margin="3" Content="Attachment:"></Label>
             <!-- Grid to split cell -->
             <Grid Grid.Row="6" Grid.Column="1">
@@ -66,7 +78,7 @@
                 <TextBox    Grid.Row="0" Grid.Column="0" Margin="3" x:Name="AttachmentFilePath" Text="{Binding Source={x:Static p:Settings.Default}, Path=AttachmentFile}"></TextBox>
                 <Button     Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Left" MinWidth="80" Name="AttachmentBrowseButton" Content="Browse" Click="AttachmentBrowse_Click"></Button>
             </Grid>
-            <Label      Grid.Row="7" Grid.Column="0" Margin="3" Content="Request Head:"></Label>
+            <Label      Grid.Row="7" Grid.Column="0" Margin="3" Content="Header(s):"></Label>
             <!-- Grid to split cell -->
             <Grid Grid.Row="7" Grid.Column="1">
                 <Grid.RowDefinitions>

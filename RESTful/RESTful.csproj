@@ -103,6 +103,9 @@
     <Compile Include="OAuth1.cs" />
     <Compile Include="OAuth2.cs" />
     <Compile Include="ObjectConverter.cs" />
+    <Compile Include="ParameterWindow.xaml.cs">
+      <DependentUpon>ParameterWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ReflectedAssembly.cs" />
     <Compile Include="ReflectedProperties.cs" />
     <Compile Include="ReflectedType.cs" />
@@ -128,6 +131,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ParameterWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
