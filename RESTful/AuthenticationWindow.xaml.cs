@@ -35,6 +35,18 @@ namespace RESTful
             {
                 BasicAuth.GenereateFields(authGrid);
             }
+            else if (authenticationMethod == "Digest")
+            {
+                DigestAuth.GenereateFields(authGrid);
+            }
+            else if (authenticationMethod == "OAuth1")
+            {
+                OAuth1.GenereateFields(authGrid);
+            }
+            else if (authenticationMethod == "OAuth2")
+            {
+                OAuth2.GenereateFields(authGrid);
+            }
         }
 
         private void BuildAuthentication_Click(object sender, RoutedEventArgs e)

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="RESTful.AuthenticationWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="AuthenticationWindow" Height="300" Width="310">
+        Title="AuthenticationWindow" Height="330" Width="320">
     <!-- Parent Grid -->
     <Grid>
         <Grid.RowDefinitions>
@@ -20,8 +20,8 @@
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Margin="3" Content="Field"></Label>
-            <Label Grid.Row="0" Grid.Column="1" Margin="3" Content="Value"></Label>
+            <Label Grid.Row="0" Grid.Column="0" Margin="3" Content="Field" FontWeight="Bold"></Label>
+            <Label Grid.Row="0" Grid.Column="1" Margin="3" Content="Value" FontWeight="Bold"></Label>
         </Grid>
         <Button Grid.Row="1" Grid.Column="0" Margin ="3" Width="150" Content="Build Authentication" Click="BuildAuthentication_Click"></Button>
     </Grid>

@@ -96,9 +96,12 @@
       <DependentUpon>AuthenticationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="BasicAuth.cs" />
+    <Compile Include="DigestAuth.cs" />
     <Compile Include="Formats.cs" />
     <Compile Include="HTTPProtocols.cs" />
     <Compile Include="HTTPVerbs.cs" />
+    <Compile Include="OAuth1.cs" />
+    <Compile Include="OAuth2.cs" />
     <Compile Include="ObjectConverter.cs" />
     <Compile Include="ReflectedAssembly.cs" />
     <Compile Include="ReflectedProperties.cs" />

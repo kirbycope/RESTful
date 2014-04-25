@@ -13,26 +13,31 @@ namespace RESTful
     {
         public static void GenereateFields(Grid authGrid)
         {
-            // Add a row to the AuthGrid
-            RowDefinition rowDefinition = new RowDefinition();
-            rowDefinition.Height = GridLength.Auto;
-            authGrid.RowDefinitions.Add(rowDefinition);
+            // Build a list of Digest Auth Fields
+            List<string> fields = new List<string>();
+            fields.Add("Username");
+            fields.Add("Password");
 
-            // Add a Username textbox
-            TextBox username = new TextBox();
-            username.SetValue(Grid.RowProperty, 1);
-            username.SetValue(Grid.ColumnProperty, 0);
-            username.Name = "Username";
-            username.Text = "username";
-            authGrid.Children.Add(username);
+            for (int i = 0; i < fields.Count; i++)
+            {
+                // Add a row to the AuthGrid
+                RowDefinition rowDefinition = new RowDefinition();
+                rowDefinition.Height = GridLength.Auto;
+                authGrid.RowDefinitions.Add(rowDefinition);
 
-            // Add a Password textbox
-            TextBox password = new TextBox();
-            password.SetValue(Grid.RowProperty, 1);
-            password.SetValue(Grid.ColumnProperty, 1);
-            password.Name = "Password";
-            password.Text = "password";
-            authGrid.Children.Add(password);
+                // Add a Label
+                Label label = new Label();
+                label.SetValue(Grid.RowProperty, i + 1);
+                label.SetValue(Grid.ColumnProperty, 0);
+                label.Content = fields[i] + ":";
+                authGrid.Children.Add(label);
+
+                // Add a textbox
+                TextBox textBox = new TextBox();
+                textBox.SetValue(Grid.RowProperty, i + 1);
+                textBox.SetValue(Grid.ColumnProperty, 1);
+                authGrid.Children.Add(textBox);
+            }
         }
         
         public static void BuildBasicAuth(Grid authGrid)
@@ -40,7 +45,7 @@ namespace RESTful
             // Get the UIElement at Row=1 Column=0 (Username)
             UIElement usernameUIElement = authGrid.Children
                             .Cast<UIElement>()
-                            .First(c => Grid.GetRow(c) == 1 && Grid.GetColumn(c) == 0);
+                            .First(c => Grid.GetRow(c) == 1 && Grid.GetColumn(c) == 1);
 
             // Cast the UIElement as a TextBox
             TextBox usernameTextBox = (TextBox)usernameUIElement;
@@ -48,7 +53,7 @@ namespace RESTful
             // Get the UIElement at Row=1 Column=0 (Password)
             UIElement passwordUIElement = authGrid.Children
                             .Cast<UIElement>()
-                            .First(c => Grid.GetRow(c) == 1 && Grid.GetColumn(c) == 1);
+                            .First(c => Grid.GetRow(c) == 2 && Grid.GetColumn(c) == 1);
 
             // Cast the UIElement as a TextBox
             TextBox passwordTextBox = (TextBox)passwordUIElement;
@@ -57,16 +62,14 @@ namespace RESTful
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(String.Format("{0}:{1}", usernameTextBox.Text, passwordTextBox.Text));
             string headerValue = System.Convert.ToBase64String(plainTextBytes);
 
-            // Store the Authentication values to a dictionary
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-            dict.Add("Authentication", headerValue);
-
             // Get the existing HttpHeader(s)
             string existingHeader = RESTful.Properties.Settings.Default.RequestHeader;
 
+            // TODO: Remove existing authentication from the string
+
             // Append the new values to the existing headers
             StringBuilder sb = new StringBuilder(existingHeader);
-            sb.AppendLine("Authentication:" + headerValue);
+            sb.AppendLine("Authentication:" + "Basic " + headerValue);
             string newHeader = sb.ToString();
 
             // Save new headers

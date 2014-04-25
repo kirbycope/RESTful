@@ -51,7 +51,7 @@ namespace RESTful
                     }
                     catch
                     {
-                        // Encountered row that was removed
+                        // Encountered a row that was removed
                     }
                 }
             }
