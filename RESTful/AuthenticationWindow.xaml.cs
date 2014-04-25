@@ -83,16 +83,12 @@ namespace RESTful
                 var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(String.Format("{0}:{1}", usernameTextBox.Text, passwordTextBox.Text));
                 string headerValue = System.Convert.ToBase64String(plainTextBytes);
 
-                // Store the Authentication values to a dictionary
-                Dictionary<string, string> dict = new Dictionary<string, string>();
-                dict.Add("Authentication", headerValue);
-
                 // Get the existing HttpHeader(s)
                 string existingHeader = RESTful.Properties.Settings.Default.RequestHeader;
 
                 // Append the new values to the existing headers
                 StringBuilder sb = new StringBuilder(existingHeader);
-                sb.AppendLine("Authentication:" + headerValue);
+                sb.AppendLine("Authentication:" + "Basic " + headerValue);
                 string newHeader = sb.ToString();
 
                 // Save new headers

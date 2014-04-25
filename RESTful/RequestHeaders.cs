@@ -19,7 +19,7 @@ namespace RESTful
 
             // Get Current row count
             int rowCount = (headerGrid.RowDefinitions.Count);
-
+            
             if ((rowCount > 0) && (RESTful.Properties.Settings.Default.RequestHeader != null) && (RESTful.Properties.Settings.Default.RequestHeader != ""))
             {
                 for (int i = 0; i < rowCount; i++)
