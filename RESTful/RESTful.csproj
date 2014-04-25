@@ -95,6 +95,7 @@
     <Compile Include="AuthenticationWindow.xaml.cs">
       <DependentUpon>AuthenticationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BasicAuth.cs" />
     <Compile Include="Formats.cs" />
     <Compile Include="HTTPProtocols.cs" />
     <Compile Include="HTTPVerbs.cs" />
