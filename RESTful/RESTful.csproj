@@ -101,6 +101,7 @@
     <Compile Include="RequestBody.cs" />
     <Compile Include="SendRequest.cs" />
     <Compile Include="Templates.cs" />
+    <Compile Include="UriParameters.cs" />
     <Compile Include="ValidateFields.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

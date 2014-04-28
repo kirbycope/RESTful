@@ -166,8 +166,8 @@
                     <Label Grid.Row="0" Grid.Column="0" Content="Field" x:Name="ParameterFieldLabel"></Label>
                     <Label Grid.Row="0" Grid.Column="1" Content="Value" x:Name="ParameterValueLabel"></Label>
                     <Label Grid.Row="0" Grid.Column="2" x:Name="RemoveAllParametersLabel" MouseDown="RemoveAllParameters_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove All" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
-                    <TextBox Grid.Row="1" Grid.Column="0"></TextBox>
-                    <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="0" x:Name="requestHeaderKey0"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="requestHeaderValue0"></TextBox>
                     <Label Grid.Row="1" Grid.Column="2" MouseDown="RemoveParameter_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
                     <Label Grid.Row="2" Grid.Column="2" x:Name="AddParameter" MouseDown="AddParameter_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Add" Foreground="DarkGreen" FontSize="16" Content="&#57473;" HorizontalAlignment="Center"/>
                 </Grid>

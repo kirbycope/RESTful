@@ -396,8 +396,11 @@ namespace RESTful
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            // Validate user input
+            // Validate user inputs
             ValidateFields.VerifyInputs();
+
+            // Set Parameters
+            UriParameters.AddToURI(ParametersGrid);
 
             // Send the request
             HttpResponseMessage result = SendRequest.Send();
