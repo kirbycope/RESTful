@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RESTful
 {
-    class Formats
+    class EncodingFormats
     {
         private static List<string> _FormatList;
         public static List<string> FormatList

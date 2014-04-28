@@ -15,9 +15,13 @@ namespace RESTful
         {
             get
             {
-                if (_ReflectedAssembly == null)
+                // Get the path from x:Name="AssemblyPath"
+                string assemblyPath = ((MainWindow)System.Windows.Application.Current.MainWindow).AssemblyPath.Text;
+
+                if ((_ReflectedAssembly == null) && (assemblyPath != null) && (assemblyPath != ""));
                 {
-                    _ReflectedAssembly = Assembly.LoadFrom(RESTful.Properties.Settings.Default.ImportAssembly);
+                    // Load the imported assembly
+                    _ReflectedAssembly = Assembly.LoadFrom(assemblyPath);
                 }
                 return _ReflectedAssembly;
             }

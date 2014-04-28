@@ -12,6 +12,7 @@ using System.Reflection;
 
 using System.IO;
 using Newtonsoft.Json;
+using System.Windows.Controls;
 
 namespace RESTful
 {
@@ -19,54 +20,58 @@ namespace RESTful
     {
         public static HttpResponseMessage Send()
         {
-            // Get inputs from saved settings
-            /// Input Settings
-            string authenticationMethod = RESTful.Properties.Settings.Default.AuthenticationMethod;
-            string version = RESTful.Properties.Settings.Default.Protocol;
-            string httpMethod = RESTful.Properties.Settings.Default.Method;
-            string requestUri = RESTful.Properties.Settings.Default.URI;
-            string attachment = RESTful.Properties.Settings.Default.AttachmentFile;
-            string requestHeaders = RESTful.Properties.Settings.Default.RequestHeader;
-            string requestBody = RESTful.Properties.Settings.Default.RequestBody;
-            /// Import Settings
-            string type = RESTful.Properties.Settings.Default.Type;
-            string format = RESTful.Properties.Settings.Default.Format;
+            // Get the user inputs
+            string authenticationMethod = ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString();
+            string version = ((MainWindow)System.Windows.Application.Current.MainWindow).ProtocolVersion.SelectedValue.ToString();
+            string httpMethod = ((MainWindow)System.Windows.Application.Current.MainWindow).HttpMethod.SelectedValue.ToString();
+            string requestUri = ((MainWindow)System.Windows.Application.Current.MainWindow).URI.Text;
+            string attachment = null; // ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.Text;
+            string requestHeaders = ((MainWindow)System.Windows.Application.Current.MainWindow).RequestBody.Text;
+            string requestBody = null; // ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.Text;
+            string type = null;
+                if (((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue != null)
+                { type = ((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString(); }
+            string format = null;
+                if (((MainWindow)System.Windows.Application.Current.MainWindow).Formats.SelectedValue != null)
+                { format = ((MainWindow)System.Windows.Application.Current.MainWindow).Formats.SelectedValue.ToString(); }
+
+            // Create HttPResponse variable
+            HttpResponseMessage result = null;
 
             if ((attachment == null) || (attachment == ""))
             {
                 // Create a variable to hold the request
                 HttpRequestMessage request = new HttpRequestMessage();
-                    // Define Protocol Version
-                    if ((version != null) && (version != "")) { request.Version = new Version(version); } 
-                    // Define the HttpMethod
-                    if ((httpMethod != null) && (httpMethod != "")) { request.Method = new HttpMethod(httpMethod); }
-                    // Define the RequestUri
-                    if ((requestUri != null) && (requestUri != "")) { request.RequestUri = new Uri(requestUri); }
-                    // Define the Headers
-                    foreach (var header in RequestHeaders.StringToDict(requestHeaders)) { request.Headers.Add(header.Key, header.Value); }
-                    // Define the HttpContent
-                    if ((requestBody != null) && (requestBody != "")) { request.Content = RequestBody.Body(requestBody); }
+                // Define Protocol Version
+                if ((version != null) && (version != "")) { request.Version = new Version(version); }
+                // Define the HttpMethod
+                if ((httpMethod != null) && (httpMethod != "")) { request.Method = new HttpMethod(httpMethod); }
+                // Define the RequestUri
+                if ((requestUri != null) && (requestUri != "")) { request.RequestUri = new Uri(requestUri); }
+                // Define the Headers
+                //foreach (var header in RequestHeaders.StringToDict(requestHeaders)) { request.Headers.Add(header.Key, header.Value); }
+                // Define the HttpContent
+                if ((requestBody != null) && (requestBody != "")) { request.Content = RequestBody.Body(requestBody); }
                     // TODO: Implement Properties
                     //request.Properties = new IDictionary<string,object>();
 
                 try
                 {
                     // Execute the SendAsync(HttpRequestMessage)
-                    HttpResponseMessage result = Client.client.SendAsync(request).Result;
+                    result = Client.client.SendAsync(request).Result;
 
                     // Return HttpResponseMessage value
                     return result;
                 }
                 catch
                 {
-                    HttpResponseMessage result = null;
-
                     // Return HttpResponseMessage value
-                    return result;
+                    return null;
                 }
             }
             else
             {
+                /*
                 using (FileStream myDoc = File.OpenRead(attachment))
                 {
                     // Create the HttpRequest Content
@@ -97,7 +102,11 @@ namespace RESTful
                         return null;
                     }
                 }
+                 */
             }
+
+            // Return HttpResponseMessage value
+            return result;
         }
     }
 }

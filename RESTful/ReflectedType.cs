@@ -17,7 +17,11 @@ namespace RESTful
             {
                 if ((_ReflectedType == null) && (ReflectedAssembly.Assembly != null))
                 {
-                    _ReflectedType = ReflectedAssembly.Assembly.GetType(RESTful.Properties.Settings.Default.Type);
+                    // Get the selected value from x:Name="Types"
+                    string selectedType = ((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString();
+
+                    // Get the type
+                    _ReflectedType = ReflectedAssembly.Assembly.GetType(selectedType);
                 }
 
                 return _ReflectedType;

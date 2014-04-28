@@ -17,6 +17,7 @@ namespace RESTful
             {
                 if ((_Properties == null) && (ReflectedType.Type != null))
                 {
+                    // Get the properties for the selected type
                     _Properties = ReflectedType.Type.GetProperties();
                 }
 

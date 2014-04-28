@@ -1,160 +1,313 @@
-﻿<Window x:Class="RESTful.MainWindow"
+﻿<Window x:Name="RESTful" x:Class="RESTful.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:p="clr-namespace:RESTful.Properties"
-        Title="RESTful" Height="600" Width="820">
-    <!-- Parent Grid -->
+        Title="RESTful" MinHeight="320" MinWidth="700">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <!-- Parent Grid-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400"/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <!-- Top Left (Child) Grid -->
-        <Grid Grid.Row="0" Grid.Column="0">
+        <!-- Menu Grid-->
+        <Grid Grid.Row="0" Grid.Column="0" x:Name="MenuGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label      Grid.Row="0" Grid.Column="0" Margin="3" Content="Request Builder"></Label>
-            <Label      Grid.Row="1" Grid.Column="0" Margin="3" Content="Authentication"></Label>
-            <!-- Grid to split cell -->
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="150"/>
-                </Grid.ColumnDefinitions>
-                <ComboBox   Grid.Row="0" Grid.Column="0" Margin="3" x:Name="Authentication" Loaded="AuthenticationMethod" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=AuthenticationMethod}"></ComboBox>
-                <Button     Grid.Row="0" Grid.Column="1" Margin="3" Content="Build Authentication" Click="BuildAuthentication_Click"></Button>
-            </Grid>
-            <Label      Grid.Row="2" Grid.Column="0" Margin="3" Content="Protocol:"></Label>
-            <ComboBox   Grid.Row="2" Grid.Column="1" Margin="3" x:Name="Protocol" Loaded="HTTPProtocol" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Protocol}"></ComboBox>
-            <Label      Grid.Row="3" Grid.Column="0" Margin="3" Content="Method:"></Label>
-            <ComboBox   Grid.Row="3" Grid.Column="1" Margin="3" x:Name="Method" Loaded="HTTPVerb" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Method}"></ComboBox>
-            <Label      Grid.Row="4" Grid.Column="0" Margin="3" Content="URI:"></Label>
-            <TextBox    Grid.Row="4" Grid.Column="1" Margin="3" x:Name="URI" Text="{Binding Source={x:Static p:Settings.Default}, Path=URI}"></TextBox>
-            <Label      Grid.Row="5" Grid.Column="0" Margin="3" Content="Parameter(s):"></Label>
-            <!-- Grid to split cell -->
-            <Grid Grid.Row="5" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="150"/>
-                </Grid.ColumnDefinitions>
-                <Button     Grid.Row="0" Grid.Column="0" Margin="3" Content="Add New Parameter" Click="AddParameter_Click"></Button>
-                <Button     Grid.Row="0" Grid.Column="1" Margin="3" Content="Remove All Parameters" Click="ClearParameter_Click"></Button>
-            </Grid>
-            <!--<TextBox    Grid.Row="5" Grid.Column="1" Margin="3" x:Name="Resource" Text="{Binding Source={x:Static p:Settings.Default}, Path=Resource}"></TextBox>-->
-            <Label      Grid.Row="6" Grid.Column="0" Margin="3" Content="Attachment:"></Label>
-            <!-- Grid to split cell -->
-            <Grid Grid.Row="6" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="214"/>
-                    <ColumnDefinition Width="86"/>
-                </Grid.ColumnDefinitions>
-                <TextBox    Grid.Row="0" Grid.Column="0" Margin="3" x:Name="AttachmentFilePath" Text="{Binding Source={x:Static p:Settings.Default}, Path=AttachmentFile}"></TextBox>
-                <Button     Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Left" MinWidth="80" Name="AttachmentBrowseButton" Content="Browse" Click="AttachmentBrowse_Click"></Button>
-            </Grid>
-            <Label      Grid.Row="7" Grid.Column="0" Margin="3" Content="Header(s):"></Label>
-            <!-- Grid to split cell -->
-            <Grid Grid.Row="7" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="150"/>
-                </Grid.ColumnDefinitions>
-                <Button     Grid.Row="0" Grid.Column="0" Margin="3" Content="Add New Header" Click="AddHeader_Click"></Button>
-                <Button     Grid.Row="0" Grid.Column="1" Margin="3" Content="Remove All Headers" Click="ClearHeader_Click"></Button>
-            </Grid>
-            <ScrollViewer Grid.Row="8" Grid.Column="1" MinHeight="23"  Height="70" VerticalScrollBarVisibility="Auto">
-                <!-- Grid to split cell -->
-                <Grid Name="headerGrid" Loaded="PopulateHeaders">
-                    <Grid.RowDefinitions>
-                        
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="140"/>
-                        <ColumnDefinition Width="140"/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </ScrollViewer>
-            <!--<TextBox    Grid.Row="6" Grid.Column="1" Margin="3" Height="100" TextWrapping="Wrap" AcceptsReturn="True" x:Name="RequestHeader" Text="{Binding Source={x:Static p:Settings.Default}, Path=RequestHeader}"></TextBox>-->
-            <Label      Grid.Row="9" Grid.Column="0" Margin="3" Content="Request Body:"></Label>
-            <TextBox    Grid.Row="9" Grid.Column="1" Margin="3" Height="200" TextWrapping="Wrap" AcceptsReturn="True" x:Name="RequestBody" Text="{Binding Source={x:Static p:Settings.Default}, Path=RequestBody}"></TextBox>
-            <Button     Grid.Row="10" Grid.Column="1" Margin="3" HorizontalAlignment="Right" MinWidth="80" Content="Submit" Click="submit_Button"></Button>
-        </Grid>
-        <!-- Top Right (Child) grid -->
-        <Grid Grid.Row="0" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="300"/>
-            </Grid.ColumnDefinitions>
-            <Label      Grid.Row="0" Grid.Column="0" Margin="3" Content="Assembly"></Label>
-            <Label      Grid.Row="1" Grid.Column="0" Margin="3" Content="Path:"></Label>
-            <!-- Grid to split cell -->
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="214"/>
-                    <ColumnDefinition Width="86"/>
-                </Grid.ColumnDefinitions>
-                <TextBox    Grid.Row="0" Grid.Column="0" Margin="3" x:Name="AssemblyFilePath" Text="{Binding Source={x:Static p:Settings.Default}, Path=ImportAssembly}"></TextBox>
-                <Button     Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Left" MinWidth="80" Name="AssemblyBrowseButton" Content="Browse" Click="AssemblyBrowse_Click"></Button>
-            </Grid>
-            <Label      Grid.Row="2" Grid.Column="0" Margin="3" Content="Type:"></Label>
-            <ComboBox   Grid.Row="2" Grid.Column="1" Margin="3" x:Name="Types" Loaded="PopulateTypes" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Type}"></ComboBox>
-            <Label      Grid.Row="3" Grid.Column="0" Margin="3" Content="Format:"></Label>
-            <ComboBox   Grid.Row="3" Grid.Column="2" Margin="3" x:Name="Format" Loaded="PopulateFormats" SelectedValue="{Binding Source={x:Static p:Settings.Default}, Path=Format}"></ComboBox>
-            <Label      Grid.Row="4" Grid.Column="0" Margin="3" Content=" "></Label>
-            <Button     Grid.Row="4" Grid.Column="1" Margin="3" HorizontalAlignment="Right" Width="150" Name="PopulateRequestBody" Content="Populate Request Body" Click="PopulateRequestBody_Click"></Button>
-            <Label      Grid.Row="5" Grid.Column="0" Margin="3" Content=" "></Label>
-            <Label      Grid.Row="6" Grid.Column="0" Margin="3" Content=" "></Label>
-            <Label      Grid.Row="7" Grid.Column="0" Margin="3" Content="Response Head:"></Label>
-            <TextBox    Grid.Row="7" Grid.Column="1" Margin="3" Height="100"  TextWrapping="Wrap" AcceptsReturn="True" x:Name="ResponseHeader" VerticalAlignment="Bottom" IsReadOnly="True"></TextBox>
-            <Label      Grid.Row="8" Grid.Column="0" Margin="3" Content="Response Body:"></Label>
-            <TextBox    Grid.Row="8" Grid.Column="1" Margin="3" Height="200"  TextWrapping="Wrap" AcceptsReturn="True" x:Name="ResponseBody" VerticalAlignment="Bottom" IsReadOnly="True"></TextBox>
-            <TextBlock  Grid.Row="9" Grid.Column="1" Margin="3" TextAlignment="Right">
-                <Hyperlink NavigateUri="https://github.com/kirbycope/RESTful/wiki" RequestNavigate="Hyperlink_RequestNavigate">About</Hyperlink>
+            <!-- New Request button -->
+            <Label Grid.Row="0" Grid.Column="0" Margin="3" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="New Request" MouseDown="NewRequest_Click">&#57378;
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
+                </TextBlock.Foreground>
+            </Label>
+            <!--
+            <TextBlock  Grid.Row="0" Grid.Column="0" Margin="3" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="New Request">
+                <Hyperlink NavigateUri="https://github.com/kirbycope/RESTful/wiki" RequestNavigate="Hyperlink_RequestNavigate" TextDecorations="{x:Null}">&#57378;</Hyperlink>
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+            -->
+            <!-- Info button -->
+            <TextBlock  Grid.Row="0" Grid.Column="1" Margin="3" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="About">
+                <Hyperlink NavigateUri="https://github.com/kirbycope/RESTful/wiki" RequestNavigate="Hyperlink_RequestNavigate" TextDecorations="{x:Null}">&#57478;</Hyperlink>
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
+                </TextBlock.Foreground> 
             </TextBlock>
         </Grid>
+        <!-- Begin Accordion grid-->
+        <Grid Grid.Row="1" Grid.Column="0" Margin="3" x:Name="AccordianGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- Authentication -->
+            <Expander x:Name="AuthenticationExpander" Grid.Row="0" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    Authentication
+                </Expander.Header>
+                <!-- AuthenticationGrid -->
+                <Grid x:Name="AuthenticationGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".25*"/>
+                        <ColumnDefinition Width=".75*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Method:"></Label>
+                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="AuthenticationMethod" Loaded="Populate_AuthenticationMethods" DropDownClosed="AuthenticationMethod_DropDownClosed"></ComboBox>
+                </Grid>
+            </Expander>
+            <!-- Protocol -->
+            <Expander x:Name="ProtocolExpander" Grid.Row="1" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    Protocol
+                </Expander.Header>
+                <!-- Protocol Grid -->
+                <Grid x:Name="ProtocolGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".25*"/>
+                        <ColumnDefinition Width=".75*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Version:"></Label>
+                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="ProtocolVersion" Loaded="Populate_ProtocolVersions"></ComboBox>
+                </Grid>
+            </Expander>
+            <!-- Method -->
+            <Expander x:Name="MethodExpander" Grid.Row="2" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    Method
+                </Expander.Header>
+                <!-- Method Grid -->
+                <Grid x:Name="MethodGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".25*"/>
+                        <ColumnDefinition Width=".75*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Method:"></Label>
+                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="HttpMethod" Loaded="Populate_HttpMethods"></ComboBox>
+                </Grid>
+            </Expander>
+            <!-- URI -->
+            <Expander x:Name="URIExpander" Grid.Row="3" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    URI
+                </Expander.Header>
+                <!-- URI Grid -->
+                <Grid x:Name="URIGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".25*"/>
+                        <ColumnDefinition Width=".75*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="URI:"></Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="URI"></TextBox>
+                </Grid>
+            </Expander>
+            <!-- Parameters -->
+            <Expander x:Name="ParametersExpander" Grid.Row="4" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    Parameters
+                </Expander.Header>
+                <!-- Parameters Grid -->
+                <Grid x:Name="ParametersGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".48*"/>
+                        <ColumnDefinition Width=".48*"/>
+                        <ColumnDefinition Width=".04*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Field" x:Name="ParameterFieldLabel"></Label>
+                    <Label Grid.Row="0" Grid.Column="1" Content="Value" x:Name="ParameterValueLabel"></Label>
+                    <Label Grid.Row="0" Grid.Column="2" x:Name="RemoveAllParametersLabel" MouseDown="RemoveAllParameters_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove All" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="0"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+                    <Label Grid.Row="1" Grid.Column="2" MouseDown="RemoveParameter_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
+                    <Label Grid.Row="2" Grid.Column="2" x:Name="AddParameter" MouseDown="AddParameter_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Add" Foreground="DarkGreen" FontSize="16" Content="&#57473;" HorizontalAlignment="Center"/>
+                </Grid>
+            </Expander>
+            <!-- Headers -->
+            <Expander x:Name="HeadersExpander" Grid.Row="5" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    Headers
+                </Expander.Header>
+                <!-- Headers Grid -->
+                <Grid x:Name="HeadersGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".48*"/>
+                        <ColumnDefinition Width=".48*"/>
+                        <ColumnDefinition Width=".04*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Field" x:Name="HeaderFieldLabel"></Label>
+                    <Label Grid.Row="0" Grid.Column="1" Content="Value" x:Name="HeaderValueLabel"></Label>
+                    <Label Grid.Row="0" Grid.Column="2" x:Name="RemoveAllHeadersLabel" MouseDown="RemoveAllHeaders_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove All" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
+                    <TextBox Grid.Row="1" Grid.Column="0"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+                    <Label Grid.Row="1" Grid.Column="2" MouseDown="RemoveHeader_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
+                    <Label x:Name="AddHeader" Grid.Row="2" Grid.Column="2" MouseDown="AddHeader_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Add" Foreground="DarkGreen" FontSize="16" Content="&#57473;" HorizontalAlignment="Center"/>
+                </Grid>
+            </Expander>
+            <!-- Body -->
+            <Expander x:Name="BodyExpander" Grid.Row="6" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    Body
+                </Expander.Header>
+                <!-- Body Grid -->
+                <Grid x:Name="BodyGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Assembly GroupBox -->
+                    <GroupBox Grid.Row="0" Grid.Column="0" Header="Import Assembly">
+                        <Grid x:Name="AssemblyGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".25*"/>
+                            <ColumnDefinition Width=".75*"/>
+                        </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Content="File:"></Label>
+                            <!-- Split cell for assembly file path text box and browse button-->
+                            <Grid Grid.Row="0" Grid.Column="1" x:Name="ImportGrid">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".75*"/>
+                                    <ColumnDefinition Width=".25*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Row="0" Grid.Column="0" x:Name="AssemblyPath" IsReadOnly="True"></TextBox>
+                                <Button Grid.Row="0" Grid.Column="1" Content="Browse" Click="AssemblyBrowse_Click"></Button>
+                            </Grid>
+                            <Label Grid.Row="1" Grid.Column="0" Content="Type:"></Label>
+                            <ComboBox Grid.Row="1" Grid.Column="1" x:Name="Types"></ComboBox>
+                            <Label Grid.Row="2" Grid.Column="0" Content="Format:"></Label>
+                            <ComboBox Grid.Row="2" Grid.Column="1" x:Name="Formats" Loaded="PopulateFormats"></ComboBox>
+                            <Button Grid.Row="3" Grid.Column="1" Content="Generate Template" Click="GenerateTemplate_Click" HorizontalAlignment="Right"></Button>
+                        </Grid>
+                    </GroupBox>
+                    <TextBox Grid.Row="1" Grid.Column="0" x:Name="RequestBody" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="200"></TextBox>
+                </Grid>
+            </Expander>
+            <!-- Sumbit-->
+            <Expander x:Name="SubmitExpander" Grid.Row="7" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    Submit
+                </Expander.Header>
+                <!-- Submit Grid -->
+                <Grid x:Name="SubmitGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".80*"/>
+                        <ColumnDefinition Width=".20*"/>
+                        <ColumnDefinition Width=".80*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content=""></Label>
+                    <Button Grid.Row="1" Grid.Column="1" Content="Submit" Click="Submit_Click"></Button>
+                    <Label Grid.Row="2" Grid.Column="0" x:Name="Warnings" Content="Warnings:" Opacity="0"/>
+                    <Label Grid.Row="2" Grid.Column="2" x:Name="Errors" Content="Errors:" Opacity="0"></Label>
+                    <TextBlock Grid.Row="3" Grid.Column="0" x:Name="ValidationWarnings" TextWrapping="Wrap"></TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="2" x:Name="ValidationErrors" TextWrapping="Wrap"></TextBlock>
+                </Grid>
+            </Expander>
+            <!-- Response-->
+            <Expander x:Name="ResponseExpander" Grid.Row="8" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    Response
+                </Expander.Header>
+                <!-- Response Grid -->
+                <Grid x:Name="ResponseGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".25*"/>
+                        <ColumnDefinition Width=".75*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Response Header:"></Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="ResponseHeader" TextWrapping="Wrap" AcceptsReturn="True" Height="100" VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Response Body:"></Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="ResponseBody" TextWrapping="Wrap" AcceptsReturn="True" Height="150" VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
+                </Grid>
+            </Expander>
+        </Grid>
     </Grid>
+    </ScrollViewer>
 </Window>

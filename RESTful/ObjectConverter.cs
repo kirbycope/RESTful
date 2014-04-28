@@ -13,10 +13,10 @@ namespace RESTful
         public static object FromJsonString(string requestBody)
         {
             StringBuilder sb = new StringBuilder(requestBody);
-                sb.Replace(System.Environment.NewLine, "");
-                sb.Replace("{", "");
-                sb.Replace("}", "");
-                sb.Replace("\"", "");
+            sb.Replace(System.Environment.NewLine, "");
+            sb.Replace("{", "");
+            sb.Replace("}", "");
+            sb.Replace("\"", "");
 
             // Split the string in multiple strings at the comma delimter
             string[] splitString = sb.ToString().Split(',');
@@ -35,11 +35,11 @@ namespace RESTful
 
             // Create a new instance of the reflected type
             object instance = Activator.CreateInstance(ReflectedType.Type);
-            
+
             // Match reflected type properties with those in the dictionary
-            foreach(PropertyInfo pi in ReflectedProperties.Properties)
+            foreach (PropertyInfo pi in ReflectedProperties.Properties)
             {
-                foreach(var p in dict)
+                foreach (var p in dict)
                 {
                     if (pi.Name == p.Key)
                     {
@@ -47,23 +47,23 @@ namespace RESTful
                     }
                 }
             }
-            
+
             return instance;
         }
 
         public static object FromXmlString(string requestBody)
         {
             StringBuilder sb = new StringBuilder(requestBody);
-                sb.Replace(System.Environment.NewLine, "");
-                sb.Replace("<" + ReflectedType.Type.Name + ">", "");
-                sb.Replace("</" + ReflectedType.Type.Name + ">", "");
+            sb.Replace(System.Environment.NewLine, "");
+            sb.Replace("<" + ReflectedType.Type.Name + ">", "");
+            sb.Replace("</" + ReflectedType.Type.Name + ">", "");
 
             // Remove end of nodes
             foreach (PropertyInfo pi in ReflectedProperties.Properties)
             {
                 sb.Replace("</" + pi.Name + ">", "");
             }
-            
+
             // Split the string in multiple strings at the less-than sign delimter
             string[] splitString = sb.ToString().Split('<');
 

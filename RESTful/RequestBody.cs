@@ -16,11 +16,11 @@ namespace RESTful
             // Create the http content variable
             HttpContent content = null;
 
-            if ((requestBody != null) && (requestBody != ""))
+            if ((((MainWindow)System.Windows.Application.Current.MainWindow).Formats.SelectedValue.ToString() != null) && (((MainWindow)System.Windows.Application.Current.MainWindow).Formats.SelectedValue.ToString() != ""))
             {
-                if (RESTful.Properties.Settings.Default.Format == "JSON")
+                if (((MainWindow)System.Windows.Application.Current.MainWindow).Formats.SelectedValue.ToString() == "JSON")
                 {
-                    if ((RESTful.Properties.Settings.Default.Type != null) && (RESTful.Properties.Settings.Default.Type != "")) // Use reflected type
+                    if ((((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString() != null) && (((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString() != "")) // Use reflected type
                     {
                         // Create and define the object to be passed in new ObjectContent as part of HttpContent
                         object instance = ObjectConverter.FromJsonString(requestBody);
@@ -34,9 +34,9 @@ namespace RESTful
                         content = new ObjectContent(typeof(string), requestBody, new JsonMediaTypeFormatter());
                     }
                 }
-                else if (RESTful.Properties.Settings.Default.Format == "XML")
+                else if (((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString() == "XML")
                 {
-                    if ((RESTful.Properties.Settings.Default.Type != null) && (RESTful.Properties.Settings.Default.Type != "")) // Use reflected type
+                    if ((((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString() != null) && (((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString() != "")) // Use reflected type
                     {
                         // Create and define the object to be passed in new ObjectContent as part of HttpContent
                         object instance = ObjectConverter.FromXmlString(requestBody);
@@ -54,7 +54,7 @@ namespace RESTful
 
             return content;
         }
-
+        /*
         public static object BodyWithFile(string requestBody)
         {
             // Create an empty object
@@ -87,8 +87,10 @@ namespace RESTful
                     }
                 };
             }
+         
 
             return instance;
         }
+        */
     }
 }

@@ -30,33 +30,116 @@ namespace RESTful
             InitializeComponent();
         }
 
-        private void AuthenticationMethod(object sender, RoutedEventArgs e)
+        private void NewRequest_Click(object sender, MouseButtonEventArgs e)
+        {
+            // Clear Authentication
+            AuthenticationMethod.SelectedIndex = -1;
+            ClearAuthenticationFields();
+            // Clear Protocol
+            ProtocolVersion.SelectedIndex = -1;
+            // Clear Method
+            HttpMethod.SelectedIndex = -1;
+            // Clear URI
+            URI.Text = "";
+            // Clear Parameters
+            RemoveAllParameters_Click(sender, e);
+            // Clear Headers
+            RemoveAllHeaders_Click(sender, e);
+            // Clear Body
+            RequestBody.Text = "";
+            // Clear Errors/Warnings
+            Warnings.Opacity = 0;
+            ValidationWarnings.Text = "";
+            Errors.Opacity = 0;
+            ValidationErrors.Text = "";
+            // Clear Response
+            ResponseHeader.Text = "";
+            ResponseBody.Text = "";
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
+
+        private void Populate_AuthenticationMethods(object sender, RoutedEventArgs e)
         {
             // Get the ComboBox reference
             var comboBox = sender as ComboBox;
 
-            // Assign the list from HTTPProtocols.cs to the ItemsSource
+            // Assign the list from AuthenticationMethods.cs to the ItemsSource
             comboBox.ItemsSource = AuthenticationMethods.AuthenticationMethodsList;
         }
 
-        private void BuildAuthentication_Click(object sender, RoutedEventArgs e)
+        private void AuthenticationMethod_DropDownClosed(object sender, EventArgs e)
         {
-            // Ensure "None" is not selected and that something else is selected
-            if ((Authentication.SelectedValue.ToString() != "None") && (Authentication.SelectedValue != null) && (Authentication.SelectedValue.ToString() != ""))
-            {
-                // Save the selected authentication value to Settings
-                RESTful.Properties.Settings.Default.AuthenticationMethod = Authentication.SelectedValue.ToString();
-                // Save the current header value(s) to Settings
-                RESTful.Properties.Settings.Default.RequestHeader = RequestHeaders.DictToString(RequestHeaders.GridToDictionary(headerGrid));
-                RESTful.Properties.Settings.Default.Save();
+            string authenticationMethod = null;
 
-                // Open the AuthenticationWindow
-                var window = new AuthenticationWindow();
-                window.Show();
+            if (AuthenticationMethod.SelectedValue != null)
+            {
+                // Get the selected authentication method
+                authenticationMethod = AuthenticationMethod.SelectedValue.ToString();
+            }
+            
+            if ((authenticationMethod != null) && (authenticationMethod != ""))
+            {
+                if (authenticationMethod == "None")
+                {
+                    if (AuthenticationGrid.RowDefinitions.Count > 1)
+                    {
+                        // Clear existing fields
+                        ClearAuthenticationFields();
+                    }
+                }
+                else if (authenticationMethod == "Basic")
+                {
+                    // Clear existing fields
+                    ClearAuthenticationFields();
+                    
+                    // Populate fields
+                    BasicAuth.GenereateFields(AuthenticationGrid);
+                }
+                else if (authenticationMethod == "Digest")
+                {
+                    // Clear existing fields
+                    ClearAuthenticationFields();
+
+                    // Populate fields
+                    DigestAuth.GenereateFields(AuthenticationGrid);
+                }
+                else if (authenticationMethod == "OAuth1")
+                {
+                    // Clear existing fields
+                    ClearAuthenticationFields();
+
+                    // Populate fields
+                    OAuth1.GenereateFields(AuthenticationGrid);
+                }
+                else if (authenticationMethod == "OAuth2")
+                {
+                    // Clear existing fields
+                    ClearAuthenticationFields();
+
+                    // Populate fields
+                    OAuth2.GenereateFields(AuthenticationGrid);
+                }
             }
         }
 
-        private void HTTPProtocol(object sender, RoutedEventArgs e)
+        private void ClearAuthenticationFields()
+        {
+            if (AuthenticationGrid.RowDefinitions.Count > 1)
+            {
+                // Delete all the children except the ComboBox row
+                AuthenticationGrid.Children.RemoveRange(2, (AuthenticationGrid.Children.Count - 2));
+
+                // Delete the now unused RowDefinitions
+                AuthenticationGrid.RowDefinitions.RemoveRange(1, (AuthenticationGrid.RowDefinitions.Count - 1));
+            }
+        }
+
+        private void Populate_ProtocolVersions(object sender, RoutedEventArgs e)
         {
             // Get the ComboBox reference
             var comboBox = sender as ComboBox;
@@ -65,124 +148,187 @@ namespace RESTful
             comboBox.ItemsSource = HTTPProtocols.HTTPProtocolsList;
         }
 
-        public void PopulateURI(object sender, RoutedEventArgs e)
+        private void Populate_HttpMethods(object sender, RoutedEventArgs e)
         {
-            // Set text to saved URI
-            URI.Text = RESTful.Properties.Settings.Default.URI;
+            // Get the ComboBox reference
+            var comboBox = sender as ComboBox;
+
+            // Assign the list from HTTPMethods.cs to the ItemsSource
+            comboBox.ItemsSource = HTTPMethods.HTTPMethodsList;
         }
 
-        private void AddParameter_Click(object sender, RoutedEventArgs e)
+        private void RemoveAllParameters_Click(object sender, MouseButtonEventArgs e)
         {
-            // Ensure a URI exists
-            if ((URI.Text != null) && (URI.Text != ""))
+            if (ParametersGrid.Children.Count > 4)
             {
-                // Save the URI value to Settings
-                RESTful.Properties.Settings.Default.URI = URI.Text;
-                RESTful.Properties.Settings.Default.Save();
+                // Create a list to hold each element to delete
+                List<UIElement> elementsToDelete = new List<UIElement>();
 
-                // Open the ParameterWindow
-                var window = new ParameterWindow();
-                window.Show();
-            }
-        }
-
-        private void ClearParameter_Click(object sender, RoutedEventArgs e)
-        {
-            if ((URI.Text != null) && (URI.Text != "") && (URI.Text.Contains('?')))
-            {
-                // Scrub Parameters from URI
-                URI.Text = URI.Text.Remove(URI.Text.IndexOf("?"));
-
-                // Save the URI value to Settings
-                RESTful.Properties.Settings.Default.URI = URI.Text;
-                RESTful.Properties.Settings.Default.Save();
-            }
-        }
-
-        public void PopulateHeaders(object sender, RoutedEventArgs e)
-        {
-            // Get the saved headers string
-            string requestHeaders = RESTful.Properties.Settings.Default.RequestHeader;
-
-            if ((requestHeaders != null ) && (requestHeaders != ""))
-            {
-                // Convert the string to a Dictionary<string, string> type
-                Dictionary<string, string> dict = RequestHeaders.StringToDict(requestHeaders);
-
-                if (dict != null)
+                // Add elements to list
+                foreach (UIElement uie in ParametersGrid.Children)
                 {
-                    for (int i = 0; i < dict.Count; i++)
+                    if (((string)uie.GetValue(NameProperty) != "RemoveAllParametersLabel") && ((string)uie.GetValue(NameProperty) != "ParameterFieldLabel") && ((string)uie.GetValue(NameProperty) != "ParameterValueLabel") && ((string)uie.GetValue(NameProperty) != "AddParameter"))
                     {
-                        // Add a row to the headerGrid
-                        RowDefinition rowDefinition = new RowDefinition();
-                        rowDefinition.Height = GridLength.Auto;
-                        headerGrid.RowDefinitions.Add(rowDefinition);
+                        elementsToDelete.Add(uie);
+                    }
+                }
 
-                        // Add a header/key textbox
-                        TextBox header = new TextBox();
-                        header.SetValue(Grid.RowProperty, i);
-                        header.SetValue(Grid.ColumnProperty, 0);
-                        header.Name = String.Format("requestHeaderKey{0}", i);
-                        header.Text = dict.ElementAt(i).Key;
-                        headerGrid.Children.Add(header);
-
-                        // Add a value textbox
-                        TextBox value = new TextBox();
-                        value.SetValue(Grid.RowProperty, i);
-                        value.SetValue(Grid.ColumnProperty, 1);
-                        value.Name = String.Format("requestHeaderValue{0}", i);
-                        value.Text = dict.ElementAt(i).Value;
-                        headerGrid.Children.Add(value);
+                // Remove elements in list from Parameters Grid
+                if (elementsToDelete != null)
+                {
+                    foreach (UIElement uie in elementsToDelete)
+                    {
+                        ParametersGrid.Children.Remove(uie);
                     }
                 }
             }
         }
 
-        private void AddHeader_Click(object sender, RoutedEventArgs e)
+        private void RemoveParameter_Click(object sender, MouseButtonEventArgs e)
+        {
+            // Get the Label reference
+            Label removeParameterLabel = sender as Label;
+
+            // Get the Label's row
+            int labelRow = (int)removeParameterLabel.GetValue(Grid.RowProperty);
+
+            // Get the row's children
+            UIElement header = ParametersGrid.Children.Cast<UIElement>().Where(i => Grid.GetRow(i) == labelRow && Grid.GetColumn(i) == 0).First();
+            UIElement value = ParametersGrid.Children.Cast<UIElement>().Where(i => Grid.GetRow(i) == labelRow && Grid.GetColumn(i) == 1).First();
+            UIElement label = ParametersGrid.Children.Cast<UIElement>().Where(i => Grid.GetRow(i) == labelRow && Grid.GetColumn(i) == 2).First();
+
+            // Remove the row's children
+            ParametersGrid.Children.Remove(header);
+            ParametersGrid.Children.Remove(value);
+            ParametersGrid.Children.Remove(label);
+        }
+
+        private void AddParameter_Click(object sender, MouseButtonEventArgs e)
         {
             // Get Current Header count
-            int headerCount = headerGrid.RowDefinitions.Count;
-
-            // Add a row to the headerGrid
-            RowDefinition rowDefinition = new RowDefinition();
-            rowDefinition.Height = GridLength.Auto;
-            headerGrid.RowDefinitions.Add(rowDefinition);
+            int headerCount = ParametersGrid.RowDefinitions.Count();
 
             // Add a header/key textbox
             TextBox header = new TextBox();
-            header.SetValue(Grid.RowProperty, headerCount);
+            header.SetValue(Grid.RowProperty, headerCount - 1);
             header.SetValue(Grid.ColumnProperty, 0);
             header.Name = String.Format("requestHeaderKey{0}", headerCount);
-            header.Text = "";
-            headerGrid.Children.Add(header);
+            ParametersGrid.Children.Add(header);
 
             // Add a value textbox
             TextBox value = new TextBox();
-            value.SetValue(Grid.RowProperty, headerCount);
+            value.SetValue(Grid.RowProperty, headerCount - 1);
             value.SetValue(Grid.ColumnProperty, 1);
             value.Name = String.Format("requestHeaderValue{0}", headerCount);
-            value.Text = "";
-            headerGrid.Children.Add(value);
+            ParametersGrid.Children.Add(value);
+
+            // Add the remove button
+            Label removeHeaderButton = new Label();
+            removeHeaderButton.SetValue(Grid.RowProperty, headerCount - 1);
+            removeHeaderButton.SetValue(Grid.ColumnProperty, 2);
+            removeHeaderButton.MouseDown += RemoveParameter_Click;
+            removeHeaderButton.FontFamily = new FontFamily("/RESTful;component/Resources/#GLYPHICONS Halflings");
+            removeHeaderButton.ToolTip = "Remove Header";
+            removeHeaderButton.Foreground = Brushes.DarkRed;
+            removeHeaderButton.FontSize = 16;
+            removeHeaderButton.Content = "\ue083";  //"&#57475;"
+            removeHeaderButton.HorizontalAlignment = HorizontalAlignment.Center;
+            ParametersGrid.Children.Add(removeHeaderButton);
+
+            // Add a row to the ParametersGrid
+            RowDefinition rowDefinition = new RowDefinition();
+            rowDefinition.Height = GridLength.Auto;
+            ParametersGrid.RowDefinitions.Add(rowDefinition);
+
+            // Move the Add Header button down a row
+            AddParameter.SetValue(Grid.RowProperty, (headerCount + 1));
         }
 
-        
-        private void ClearHeader_Click(object sender, RoutedEventArgs e)
+        private void RemoveAllHeaders_Click(object sender, MouseButtonEventArgs e)
         {
-            // Clear headers
-            headerGrid.Children.Clear();
+            if (HeadersGrid.Children.Count > 4)
+            {
+                // Create a list to hold each element to delete
+                List<UIElement> elementsToDelete = new List<UIElement>();
 
-            // Update settings
-            RESTful.Properties.Settings.Default.RequestHeader = null;
-            RESTful.Properties.Settings.Default.Save();
+                // Add elements to list
+                foreach (UIElement uie in HeadersGrid.Children)
+                {
+                    if (((string)uie.GetValue(NameProperty) != "RemoveAllHeadersLabel") && ((string)uie.GetValue(NameProperty) != "HeaderFieldLabel") && ((string)uie.GetValue(NameProperty) != "HeaderValueLabel") && ((string)uie.GetValue(NameProperty) != "AddHeader"))
+                    {
+                        elementsToDelete.Add(uie);
+                    }
+                }
+
+                // Remove elements in list from Parameters Grid
+                if (elementsToDelete != null)
+                {
+                    foreach (UIElement uie in elementsToDelete)
+                    {
+                        HeadersGrid.Children.Remove(uie);
+                    }
+                }
+            }
         }
 
-        private void HTTPVerb(object sender, RoutedEventArgs e)
+        public void RemoveHeader_Click(object sender, MouseButtonEventArgs e) // Needs work on removing children
         {
-            // Get the ComboBox reference
-            var comboBox = sender as ComboBox;
+            // Get the Label reference
+            Label removeHeaderLabel = sender as Label;
 
-            // Assign the list from HTTPVerbs.cs to the ItemsSource
-            comboBox.ItemsSource = HTTPVerbs.HTTPVerbsList;
+            // Get the Label's row
+            int labelRow = (int)removeHeaderLabel.GetValue(Grid.RowProperty);
+
+            // Get the row's children
+            UIElement header = HeadersGrid.Children.Cast<UIElement>().Where(i => Grid.GetRow(i) == labelRow && Grid.GetColumn(i) == 0).First();
+            UIElement value = HeadersGrid.Children.Cast<UIElement>().Where(i => Grid.GetRow(i) == labelRow && Grid.GetColumn(i) == 1).First();
+            UIElement label = HeadersGrid.Children.Cast<UIElement>().Where(i => Grid.GetRow(i) == labelRow && Grid.GetColumn(i) == 2).First();
+
+            // Remove the row's children
+            HeadersGrid.Children.Remove(header);
+            HeadersGrid.Children.Remove(value);
+            HeadersGrid.Children.Remove(label);
+        }
+
+        private void AddHeader_Click(object sender, MouseButtonEventArgs e)
+        {
+            // Get Current Header count
+            int headerCount = HeadersGrid.RowDefinitions.Count();
+
+            // Add a header/key textbox
+            TextBox header = new TextBox();
+            header.SetValue(Grid.RowProperty, headerCount - 1);
+            header.SetValue(Grid.ColumnProperty, 0);
+            header.Name = String.Format("requestHeaderKey{0}", headerCount);
+            HeadersGrid.Children.Add(header);
+
+            // Add a value textbox
+            TextBox value = new TextBox();
+            value.SetValue(Grid.RowProperty, headerCount -1);
+            value.SetValue(Grid.ColumnProperty, 1);
+            value.Name = String.Format("requestHeaderValue{0}", headerCount);
+            HeadersGrid.Children.Add(value);
+
+            // Add the remove button
+            Label removeHeaderButton = new Label();
+            removeHeaderButton.SetValue(Grid.RowProperty, headerCount - 1);
+            removeHeaderButton.SetValue(Grid.ColumnProperty, 2);
+            removeHeaderButton.MouseDown += RemoveHeader_Click;
+            removeHeaderButton.FontFamily = new FontFamily("/RESTful;component/Resources/#GLYPHICONS Halflings");
+            removeHeaderButton.ToolTip = "Remove Header";
+            removeHeaderButton.Foreground = Brushes.DarkRed;
+            removeHeaderButton.FontSize = 16;
+            removeHeaderButton.Content = "\ue083";  //"&#57475;"
+            removeHeaderButton.HorizontalAlignment = HorizontalAlignment.Center;
+            HeadersGrid.Children.Add(removeHeaderButton);
+
+            // Add a row to the HeadersGrid
+            RowDefinition rowDefinition = new RowDefinition();
+            rowDefinition.Height = GridLength.Auto;
+            HeadersGrid.RowDefinitions.Add(rowDefinition);
+
+            // Move the Add Header button down a row
+            AddHeader.SetValue(Grid.RowProperty, (headerCount + 1));
         }
 
         private void AssemblyBrowse_Click(object sender, RoutedEventArgs e)
@@ -199,45 +345,23 @@ namespace RESTful
             if (result == true)
             {
                 // Write the result to the text block x:Name="AssemblyFilePath"
-                AssemblyFilePath.Text = dlg.FileName;
+                AssemblyPath.Text = dlg.FileName;
             }
 
-            // Poputlate Types
-            PopulateTypes(sender, e);
-        }
-
-        private void AttachmentBrowse_Click(object sender, RoutedEventArgs e)
-        {
-            // Configure open file dialog box
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-            // Show open file dialog box
-            Nullable<bool> result = dlg.ShowDialog();
-
-            // Process open file dialog box results 
-            if (result == true)
-            {
-                // Write the result to the text block x:Name="AttachmentFilePath"
-                AttachmentFilePath.Text = dlg.FileName;
-            }
-        }
-
-        private void PopulateTypes(object sender, RoutedEventArgs e)
-        {
             // Ensure user defined inputs have value
-            if ((AssemblyFilePath.Text != null) && (AssemblyFilePath.Text != "") && (AssemblyFilePath.Text.EndsWith(".dll")))
+            if ((AssemblyPath.Text != null) && (AssemblyPath.Text != "") && (AssemblyPath.Text.EndsWith(".dll")))
             {
-                // Load the DLL from the ImportFile value
-                Assembly importedDLL = Assembly.LoadFrom(AssemblyFilePath.Text);
+                // Load the imported assembly
+                Assembly importedAssembly = ReflectedAssembly.Assembly;
 
                 // Build a List of strings, containing the options
                 List<string> types = new List<string>();
-                foreach (Type t in importedDLL.GetTypes())
+                foreach (Type t in importedAssembly.GetTypes())
                 {
                     types.Add(t.ToString());
                 }
 
-                // Assign the ItemsSource to the List
+                // Assign the ItemsSource to the list for x:Name="Types"
                 Types.ItemsSource = types;
             }
         }
@@ -248,23 +372,21 @@ namespace RESTful
             var comboBox = sender as ComboBox;
 
             // Assign the list from Formats.cs to the ItemsSource
-            comboBox.ItemsSource = Formats.FormatList;          
+            comboBox.ItemsSource = EncodingFormats.FormatList;
         }
 
-        private void PopulateRequestBody_Click(object sender, RoutedEventArgs e)
+        private void GenerateTemplate_Click(object sender, RoutedEventArgs e)
         {
-            // Save selection settings
-            SaveImportInputs();
 
             // Ensure user defined inputs have value
-            if ((AssemblyFilePath.Text != null) && (Types.SelectedValue != null) && (Types.SelectedValue.ToString() != "") && (Format.Text != null) && (Format.Text != ""))
+            if ((AssemblyPath.Text != null) && (AssemblyPath.Text != "") && (Types.SelectedValue != null) && (Types.SelectedValue.ToString() != "") && (Formats.Text != null) && (Formats.Text != ""))
             {
-                if (Format.SelectedValue.ToString() == "JSON")
+                if (Formats.SelectedValue.ToString() == "JSON")
                 {
                     // Build a JSON template string and write the result to the text block x:Name="Body"
                     RequestBody.Text = Templates.JSONTemplate();
                 }
-                else if (Format.SelectedValue.ToString() == "XML")
+                else if (Formats.SelectedValue.ToString() == "XML")
                 {
                     // Build ax XML template string and write the result to the text block x:Name="Body"
                     RequestBody.Text = Templates.XMLTemplate();
@@ -272,57 +394,29 @@ namespace RESTful
             }
         }
 
-        void submit_Button(object sender, RoutedEventArgs e)
+        private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            // Save current request
-            SaveRequestInputs();
+            // Validate user input
+            ValidateFields.VerifyInputs();
 
             // Send the request
             HttpResponseMessage result = SendRequest.Send();
-            
+
             // Check result
             if (result != null)
             {
                 // Write the result to the text blocks x:Name="ResponseHeader" and x:Name="ResponseBody"
                 ResponseHeader.Text = result.Headers.ToString();
                 ResponseBody.Text = result.Content.ReadAsStringAsync().Result;
+
+                // Expand Response Expander
+                ResponseExpander.IsExpanded = true;
             }
             else
             {
                 // Print error message
-                ResponseBody.Text = "There was an error with your request. Please check your input and try again.";
+                ValidationErrors.Text = ValidationErrors.Text + System.Environment.NewLine + "There was an error with your request. Please check your input and try again.";
             }
-        }
-
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
-        }
-
-        void SaveRequestInputs()
-        {
-            RESTful.Properties.Settings.Default.AuthenticationMethod = Authentication.SelectedValue.ToString();
-            RESTful.Properties.Settings.Default.Protocol = Protocol.SelectedValue.ToString();
-            RESTful.Properties.Settings.Default.Method = Method.SelectedValue.ToString();
-            RESTful.Properties.Settings.Default.URI = URI.Text;
-            RESTful.Properties.Settings.Default.AttachmentFile = AttachmentFilePath.Text;
-            RESTful.Properties.Settings.Default.RequestHeader = RequestHeaders.DictToString(RequestHeaders.GridToDictionary(headerGrid));
-            RESTful.Properties.Settings.Default.RequestBody = RequestBody.Text;
-            RESTful.Properties.Settings.Default.Save();
-        }
-
-        void SaveImportInputs()
-        {
-            RESTful.Properties.Settings.Default.ImportAssembly = AssemblyFilePath.Text;
-            RESTful.Properties.Settings.Default.Type = Types.SelectedValue.ToString()?? "";
-            RESTful.Properties.Settings.Default.Format = Format.SelectedValue.ToString() ?? "";
-            RESTful.Properties.Settings.Default.Save();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
     }
