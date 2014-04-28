@@ -58,7 +58,7 @@ namespace RESTful
                     }
 
                     // Add row to dictionary
-                    if (parameterKey != "" && parameterValue != "")
+                    if ((parameterKey != "") && (parameterValue != "") && (dict.ContainsKey(parameterKey) == false))
                     {
                         dict.Add(parameterKey, parameterValue);
                     }
@@ -74,15 +74,19 @@ namespace RESTful
                     {
                         foreach (KeyValuePair<string, string> pair in dict)
                         {
-                            // See if query string was started by the user
-                            if (uri.Contains("?"))
+                            // Make sure the same key isn't added twice
+                            if (uri.Contains(pair.Key) == false)
                             {
-                                
-                                sb.Append(String.Format("&{0}={1}", pair.Key, pair.Value));
-                            }
-                            else
-                            {
-                                sb.Append(String.Format("?{0}={1}", pair.Key, pair.Value));
+                                // See if query string was started by the user
+                                if (uri.Contains("?"))
+                                {
+
+                                    sb.Append(String.Format("&{0}={1}", pair.Key, pair.Value));
+                                }
+                                else
+                                {
+                                    sb.Append(String.Format("?{0}={1}", pair.Key, pair.Value));
+                                }
                             }
                         }
                     }
