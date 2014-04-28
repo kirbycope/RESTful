@@ -24,10 +24,11 @@ namespace RESTful
             string authenticationMethod = ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString();
             string version = ((MainWindow)System.Windows.Application.Current.MainWindow).ProtocolVersion.SelectedValue.ToString();
             string httpMethod = ((MainWindow)System.Windows.Application.Current.MainWindow).HttpMethod.SelectedValue.ToString();
-            string requestUri = ((MainWindow)System.Windows.Application.Current.MainWindow).URI.Text;
-            string attachment = null; // ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.Text;
-            string requestHeaders = ((MainWindow)System.Windows.Application.Current.MainWindow).RequestBody.Text;
-            string requestBody = null; // ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.Text;
+            string requestUri = null;
+                if (((MainWindow)System.Windows.Application.Current.MainWindow).URI.Text != null)
+                { requestUri = UriParameters.AddToURI(); }
+            string attachment = null; // ((MainWindow)System.Windows.Application.Current.MainWindow).Attachement.Text;
+            string requestBody = ((MainWindow)System.Windows.Application.Current.MainWindow).RequestBody.Text;
             string type = null;
                 if (((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue != null)
                 { type = ((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString(); }
@@ -49,11 +50,11 @@ namespace RESTful
                 // Define the RequestUri
                 if ((requestUri != null) && (requestUri != "")) { request.RequestUri = new Uri(requestUri); }
                 // Define the Headers
-                //foreach (var header in RequestHeaders.StringToDict(requestHeaders)) { request.Headers.Add(header.Key, header.Value); }
+                foreach (var header in RequestHeaders.GridToHeaders()) { request.Headers.Add(header.Key, header.Value); }
                 // Define the HttpContent
                 if ((requestBody != null) && (requestBody != "")) { request.Content = RequestBody.Body(requestBody); }
-                    // TODO: Implement Properties
-                    //request.Properties = new IDictionary<string,object>();
+                // TODO: Implement Properties
+                //request.Properties = new IDictionary<string,object>();
 
                 try
                 {

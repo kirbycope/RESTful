@@ -99,6 +99,7 @@
     <Compile Include="ReflectedProperties.cs" />
     <Compile Include="ReflectedType.cs" />
     <Compile Include="RequestBody.cs" />
+    <Compile Include="RequestHeaders.cs" />
     <Compile Include="SendRequest.cs" />
     <Compile Include="Templates.cs" />
     <Compile Include="UriParameters.cs" />

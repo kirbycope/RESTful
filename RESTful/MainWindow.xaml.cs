@@ -212,28 +212,28 @@ namespace RESTful
             TextBox header = new TextBox();
             header.SetValue(Grid.RowProperty, headerCount - 1);
             header.SetValue(Grid.ColumnProperty, 0);
-            header.Name = String.Format("requestHeaderKey{0}", headerCount);
+            header.Name = String.Format("requestParameterKey{0}", headerCount);
             ParametersGrid.Children.Add(header);
 
             // Add a value textbox
             TextBox value = new TextBox();
             value.SetValue(Grid.RowProperty, headerCount - 1);
             value.SetValue(Grid.ColumnProperty, 1);
-            value.Name = String.Format("requestHeaderValue{0}", headerCount);
+            value.Name = String.Format("requestParameterValue{0}", headerCount);
             ParametersGrid.Children.Add(value);
 
             // Add the remove button
-            Label removeHeaderButton = new Label();
-            removeHeaderButton.SetValue(Grid.RowProperty, headerCount - 1);
-            removeHeaderButton.SetValue(Grid.ColumnProperty, 2);
-            removeHeaderButton.MouseDown += RemoveParameter_Click;
-            removeHeaderButton.FontFamily = new FontFamily("/RESTful;component/Resources/#GLYPHICONS Halflings");
-            removeHeaderButton.ToolTip = "Remove Header";
-            removeHeaderButton.Foreground = Brushes.DarkRed;
-            removeHeaderButton.FontSize = 16;
-            removeHeaderButton.Content = "\ue083";  //"&#57475;"
-            removeHeaderButton.HorizontalAlignment = HorizontalAlignment.Center;
-            ParametersGrid.Children.Add(removeHeaderButton);
+            Label removeParameterButton = new Label();
+            removeParameterButton.SetValue(Grid.RowProperty, headerCount - 1);
+            removeParameterButton.SetValue(Grid.ColumnProperty, 2);
+            removeParameterButton.MouseDown += RemoveParameter_Click;
+            removeParameterButton.FontFamily = new FontFamily("/RESTful;component/Resources/#GLYPHICONS Halflings");
+            removeParameterButton.ToolTip = "Remove Parameter";
+            removeParameterButton.Foreground = Brushes.DarkRed;
+            removeParameterButton.FontSize = 16;
+            removeParameterButton.Content = "\ue083";  //"&#57475;"
+            removeParameterButton.HorizontalAlignment = HorizontalAlignment.Center;
+            ParametersGrid.Children.Add(removeParameterButton);
 
             // Add a row to the ParametersGrid
             RowDefinition rowDefinition = new RowDefinition();
@@ -399,8 +399,8 @@ namespace RESTful
             // Validate user inputs
             ValidateFields.VerifyInputs();
 
-            // Set Parameters
-            UriParameters.AddToURI(ParametersGrid);
+            // Add Parameters to URI
+            UriParameters.AddToURI();
 
             // Send the request
             HttpResponseMessage result = SendRequest.Send();

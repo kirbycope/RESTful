@@ -10,8 +10,14 @@ namespace RESTful
 {
     class UriParameters
     {
-        public static void AddToURI(Grid ParametersGrid)
+        public static string AddToURI()
         {
+            // Get the ParametersGrid from the MainWindow
+            Grid ParametersGrid = ((MainWindow)System.Windows.Application.Current.MainWindow).HeadersGrid;
+
+            // Create a string to hold the return value
+            string URI = "";
+
             // Ensure there are parameters
             if (ParametersGrid.Children.Count > 4)
             {
@@ -92,9 +98,11 @@ namespace RESTful
                     }
 
                     // Update the URI
-                    ((MainWindow)System.Windows.Application.Current.MainWindow).URI.Text = sb.ToString();
+                    URI = sb.ToString();
                 }
             }
+
+            return URI;
         }
     }
 }

@@ -166,8 +166,8 @@
                     <Label Grid.Row="0" Grid.Column="0" Content="Field" x:Name="ParameterFieldLabel"></Label>
                     <Label Grid.Row="0" Grid.Column="1" Content="Value" x:Name="ParameterValueLabel"></Label>
                     <Label Grid.Row="0" Grid.Column="2" x:Name="RemoveAllParametersLabel" MouseDown="RemoveAllParameters_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove All" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
-                    <TextBox Grid.Row="1" Grid.Column="0" x:Name="requestHeaderKey0"></TextBox>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="requestHeaderValue0"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="0" x:Name="requestParameterKey0"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="requestParameterValue0"></TextBox>
                     <Label Grid.Row="1" Grid.Column="2" MouseDown="RemoveParameter_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
                     <Label Grid.Row="2" Grid.Column="2" x:Name="AddParameter" MouseDown="AddParameter_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Add" Foreground="DarkGreen" FontSize="16" Content="&#57473;" HorizontalAlignment="Center"/>
                 </Grid>
@@ -195,8 +195,8 @@
                     <Label Grid.Row="0" Grid.Column="0" Content="Field" x:Name="HeaderFieldLabel"></Label>
                     <Label Grid.Row="0" Grid.Column="1" Content="Value" x:Name="HeaderValueLabel"></Label>
                     <Label Grid.Row="0" Grid.Column="2" x:Name="RemoveAllHeadersLabel" MouseDown="RemoveAllHeaders_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove All" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
-                    <TextBox Grid.Row="1" Grid.Column="0"></TextBox>
-                    <TextBox Grid.Row="1" Grid.Column="1"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="0" x:Name="requestHeaderKey0"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="requestHeaderValue0"></TextBox>
                     <Label Grid.Row="1" Grid.Column="2" MouseDown="RemoveHeader_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Remove" Foreground="DarkRed" FontSize="16" Content="&#57475;" HorizontalAlignment="Center"/>
                     <Label x:Name="AddHeader" Grid.Row="2" Grid.Column="2" MouseDown="AddHeader_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Add" Foreground="DarkGreen" FontSize="16" Content="&#57473;" HorizontalAlignment="Center"/>
                 </Grid>
@@ -251,7 +251,7 @@
                             <Button Grid.Row="3" Grid.Column="1" Content="Generate Template" Click="GenerateTemplate_Click" HorizontalAlignment="Right"></Button>
                         </Grid>
                     </GroupBox>
-                    <TextBox Grid.Row="1" Grid.Column="0" x:Name="RequestBody" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="200"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="0" x:Name="RequestBody" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto"></TextBox>
                 </Grid>
             </Expander>
             <!-- Sumbit-->
@@ -302,9 +302,9 @@
                         <ColumnDefinition Width=".75*"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Response Header:"></Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="ResponseHeader" TextWrapping="Wrap" AcceptsReturn="True" Height="100" VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="ResponseHeader" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" MaxHeight="150" VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
                     <Label Grid.Row="1" Grid.Column="0" Content="Response Body:"></Label>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="ResponseBody" TextWrapping="Wrap" AcceptsReturn="True" Height="150" VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="ResponseBody" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" MaxHeight="200" VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
                 </Grid>
             </Expander>
         </Grid>
