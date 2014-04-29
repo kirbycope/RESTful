@@ -28,11 +28,22 @@ namespace RESTful
                 warnings.AppendLine("Protocol version set to '1.1'");
             }
 
-            // HTTP Method (Verb): If null, then set to "GET"
+            // HTTP Method (Verb): If null, then ...
             if (((MainWindow)System.Windows.Application.Current.MainWindow).HttpMethod.SelectedValue == null)
             {
-                ((MainWindow)System.Windows.Application.Current.MainWindow).HttpMethod.SelectedValue = "GET";
-                warnings.AppendLine("HTTP Method set to 'GET'");
+                if ((((MainWindow)System.Windows.Application.Current.MainWindow).AttachmentPath.Text == null) || (((MainWindow)System.Windows.Application.Current.MainWindow).AttachmentPath.Text == ""))
+                {
+                    // ... set to GET
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).HttpMethod.SelectedValue = "GET";
+                    warnings.AppendLine("HTTP Method set to 'GET'");
+                }
+                else
+                {
+                    // ... set to POST
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).HttpMethod.SelectedValue = "POST";
+                    warnings.AppendLine("HTTP Method set to 'POST'");
+                }
+                
             }
 
             // Request URI: If invalid return error message

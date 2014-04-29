@@ -11,7 +11,7 @@ namespace RESTful
 {
     class RequestBody
     {
-        public static HttpContent Body(string requestBody)
+        public static HttpContent ToHttpContent(string requestBody)
         {
             // Create the http content variable
             HttpContent content = null;
@@ -54,17 +54,17 @@ namespace RESTful
 
             return content;
         }
-        /*
-        public static object BodyWithFile(string requestBody)
+
+        public static object ToObject(string requestBody)
         {
             // Create an empty object
             object instance = null;
 
             if ((requestBody != null) && (requestBody != ""))
             {
-                if (RESTful.Properties.Settings.Default.Format == "JSON")
+                if (((MainWindow)System.Windows.Application.Current.MainWindow).Formats.SelectedValue.ToString() == "JSON")
                 {
-                    if ((RESTful.Properties.Settings.Default.Type != null) && (RESTful.Properties.Settings.Default.Type != "")) // Use reflected type
+                    if ((((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString() != null) && (((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString() != "")) // Use reflected type
                     {
                         // Create and define the object to be passed in new ObjectContent as part of HttpContent
                         instance = ObjectConverter.FromJsonString(requestBody);
@@ -74,9 +74,9 @@ namespace RESTful
                         instance = typeof(string);
                     }
                 }
-                else if (RESTful.Properties.Settings.Default.Format == "XML")
+                else if (((MainWindow)System.Windows.Application.Current.MainWindow).Formats.SelectedValue.ToString() == "XML")
                 {
-                    if ((RESTful.Properties.Settings.Default.Type != null) && (RESTful.Properties.Settings.Default.Type != "")) // Use reflected type
+                    if ((((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString() != null) && (((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString() != "")) // Use reflected type
                     {
                         // Create and define the object to be passed in new ObjectContent as part of HttpContent
                         instance = ObjectConverter.FromXmlString(requestBody);
@@ -87,10 +87,8 @@ namespace RESTful
                     }
                 };
             }
-         
 
             return instance;
         }
-        */
     }
 }

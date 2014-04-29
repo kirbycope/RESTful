@@ -75,6 +75,7 @@
       <HintPath>..\..\..\..\GitHub\RESTful\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
