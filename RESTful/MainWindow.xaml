@@ -18,25 +18,31 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width=".06*"/>
+                <ColumnDefinition Width=".06*"/>
+                <ColumnDefinition Width=".06*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!-- New Request button -->
-            <Label Grid.Row="0" Grid.Column="0" Margin="3" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="New Request" MouseDown="NewRequest_Click">&#57378;
+            <Label Grid.Row="0" Grid.Column="0" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="New Request" MouseDown="NewRequest_Click">&#57378;
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
                 </TextBlock.Foreground>
             </Label>
-            <!--
-            <TextBlock  Grid.Row="0" Grid.Column="0" Margin="3" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="New Request">
-                <Hyperlink NavigateUri="https://github.com/kirbycope/RESTful/wiki" RequestNavigate="Hyperlink_RequestNavigate" TextDecorations="{x:Null}">&#57378;</Hyperlink>
+            <!-- Save button -->
+            <Label Grid.Row="0" Grid.Column="1" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" ToolTip="Save Request" MouseDown="SaveRequest_Click" VerticalAlignment="Bottom">&#57714;
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
                 </TextBlock.Foreground>
-            </TextBlock>
-            -->
+            </Label>
+            <!-- Open button -->
+            <Label Grid.Row="0" Grid.Column="2" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Open Request" MouseDown="OpenRequest_Click">&#57624;
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
+                </TextBlock.Foreground>
+            </Label>
             <!-- Info button -->
-            <TextBlock  Grid.Row="0" Grid.Column="1" Margin="3" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="About">
+            <TextBlock  Grid.Row="0" Grid.Column="3" Margin="3" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="About">
                 <Hyperlink NavigateUri="https://github.com/kirbycope/RESTful/wiki" RequestNavigate="Hyperlink_RequestNavigate" TextDecorations="{x:Null}">&#57478;</Hyperlink>
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
@@ -46,6 +52,7 @@
         <!-- Begin Accordion grid-->
         <Grid Grid.Row="1" Grid.Column="0" Margin="3" x:Name="AccordianGrid">
             <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -201,8 +208,31 @@
                     <Label x:Name="AddHeader" Grid.Row="2" Grid.Column="2" MouseDown="AddHeader_Click" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" ToolTip="Add" Foreground="DarkGreen" FontSize="16" Content="&#57473;" HorizontalAlignment="Center"/>
                 </Grid>
             </Expander>
+            <!-- File Attachment -->
+            <Expander x:Name="AttachmentExpander" Grid.Row="6" Grid.Column="0">
+                <Expander.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+                </Expander.Background>
+                <Expander.Header>
+                    Attachment
+                </Expander.Header>
+                <!-- Attachment Grid -->
+                <Grid x:Name="AttachmentGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".15*"/>
+                            <ColumnDefinition Width=".75*"/>
+                        <ColumnDefinition Width=".15*"/>
+                    </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="File:"></Label>
+                        <TextBox Grid.Row="0" Grid.Column="1" x:Name="AttachmentPath" IsReadOnly="True"></TextBox>
+                        <Button Grid.Row="0" Grid.Column="2" Content="Browse" Click="AttachmentBrowse_Click"></Button>
+                </Grid>
+            </Expander>
             <!-- Body -->
-            <Expander x:Name="BodyExpander" Grid.Row="6" Grid.Column="0">
+            <Expander x:Name="BodyExpander" Grid.Row="7" Grid.Column="0">
                 <Expander.Background>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
                 </Expander.Background>
@@ -216,10 +246,11 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".25*"/>
+                        <ColumnDefinition Width=".75*"/>
+                        </Grid.ColumnDefinitions>
                     <!-- Assembly GroupBox -->
-                    <GroupBox Grid.Row="0" Grid.Column="0" Header="Import Assembly">
+                    <GroupBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Header="Import Assembly">
                         <Grid x:Name="AssemblyGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -251,11 +282,12 @@
                             <Button Grid.Row="3" Grid.Column="1" Content="Generate Template" Click="GenerateTemplate_Click" HorizontalAlignment="Right"></Button>
                         </Grid>
                     </GroupBox>
-                    <TextBox Grid.Row="1" Grid.Column="0" x:Name="RequestBody" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto"></TextBox>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Content:"></Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="RequestBody" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto"></TextBox>
                 </Grid>
             </Expander>
             <!-- Sumbit-->
-            <Expander x:Name="SubmitExpander" Grid.Row="7" Grid.Column="0">
+            <Expander x:Name="SubmitExpander" Grid.Row="8" Grid.Column="0">
                 <Expander.Background>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
                 </Expander.Background>
@@ -284,7 +316,7 @@
                 </Grid>
             </Expander>
             <!-- Response-->
-            <Expander x:Name="ResponseExpander" Grid.Row="8" Grid.Column="0">
+            <Expander x:Name="ResponseExpander" Grid.Row="9" Grid.Column="0">
                 <Expander.Background>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
                 </Expander.Background>

@@ -45,6 +45,8 @@ namespace RESTful
             RemoveAllParameters_Click(sender, e);
             // Clear Headers
             RemoveAllHeaders_Click(sender, e);
+            // Clear Attachment
+            AttachmentPath.Text = "";
             // Clear Body
             RequestBody.Text = "";
             // Clear Errors/Warnings
@@ -56,6 +58,16 @@ namespace RESTful
             ResponseHeader.Text = "";
             ResponseBody.Text = "";
         }
+
+        private void SaveRequest_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void OpenRequest_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }        
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
@@ -329,6 +341,22 @@ namespace RESTful
 
             // Move the Add Header button down a row
             AddHeader.SetValue(Grid.RowProperty, (headerCount + 1));
+        }
+
+        private void AttachmentBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            // Configure open file dialog box
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result == true)
+            {
+                // Write the result to the text block x:Name="AssemblyFilePath"
+                AttachmentPath.Text = dlg.FileName;
+            }
         }
 
         private void AssemblyBrowse_Click(object sender, RoutedEventArgs e)
