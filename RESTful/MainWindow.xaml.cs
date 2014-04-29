@@ -110,7 +110,7 @@ namespace RESTful
                     ClearAuthenticationFields();
                     
                     // Populate fields
-                    BasicAuth.GenereateFields(AuthenticationGrid);
+                    BasicAuth.GenereateFields();
                 }
                 else if (authenticationMethod == "Digest")
                 {
@@ -118,7 +118,7 @@ namespace RESTful
                     ClearAuthenticationFields();
 
                     // Populate fields
-                    DigestAuth.GenereateFields(AuthenticationGrid);
+                    DigestAuth.GenereateFields();
                 }
                 else if (authenticationMethod == "OAuth1")
                 {
@@ -126,7 +126,7 @@ namespace RESTful
                     ClearAuthenticationFields();
 
                     // Populate fields
-                    OAuth1.GenereateFields(AuthenticationGrid);
+                    OAuth1.GenereateFields();
                 }
                 else if (authenticationMethod == "OAuth2")
                 {
@@ -134,7 +134,7 @@ namespace RESTful
                     ClearAuthenticationFields();
 
                     // Populate fields
-                    OAuth2.GenereateFields(AuthenticationGrid);
+                    OAuth2.GenereateFields();
                 }
             }
         }

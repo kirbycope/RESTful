@@ -18,7 +18,21 @@ namespace RESTful
             // Create a dictionary to hold values
             Dictionary<string, string> dict = new Dictionary<string, string>();
 
-            // Ensure there are headers
+            // Add Authentication headers
+            if (((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString() == "BASIC")
+            {
+                // Get the encoded header
+                KeyValuePair<string, string> kvp = BasicAuth.GetInputs();
+
+                // Add authentication header to dictionary
+                dict.Add(kvp.Key, kvp.Value);
+            }
+            else if (((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString() == "DIGEST")
+            {
+                //
+            }
+
+            // Ensure there are headers in the HeadersGrid to be added
             if (HeadersGrid.Children.Count > 4)
             {
                  // Get each parameter starting after the first 3 labels/UIElements and go up to the last label/UIElement (plus sign)

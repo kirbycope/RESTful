@@ -11,8 +11,11 @@ namespace RESTful
 {
     class OAuth1
     {
-        public static void GenereateFields(Grid AuthenticationGrid)
+        public static void GenereateFields()
         {
+            // Get the Grid from the MainWindow
+            Grid AuthenticationGrid = ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationGrid;
+
             // Build a list of Digest Auth Fields
             List<string> fields = new List<string>();
             fields.Add("Consumer Key");
