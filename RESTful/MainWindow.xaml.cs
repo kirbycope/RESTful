@@ -239,7 +239,7 @@ namespace RESTful
             removeParameterButton.SetValue(Grid.RowProperty, headerCount - 1);
             removeParameterButton.SetValue(Grid.ColumnProperty, 2);
             removeParameterButton.MouseDown += RemoveParameter_Click;
-            removeParameterButton.FontFamily = new FontFamily("/RESTful;component/Resources/#GLYPHICONS Halflings");
+            removeParameterButton.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "/Resources/#GLYPHICONS Halflings");
             removeParameterButton.ToolTip = "Remove Parameter";
             removeParameterButton.Foreground = Brushes.DarkRed;
             removeParameterButton.FontSize = 16;
@@ -326,7 +326,7 @@ namespace RESTful
             removeHeaderButton.SetValue(Grid.RowProperty, headerCount - 1);
             removeHeaderButton.SetValue(Grid.ColumnProperty, 2);
             removeHeaderButton.MouseDown += RemoveHeader_Click;
-            removeHeaderButton.FontFamily = new FontFamily("/RESTful;component/Resources/#GLYPHICONS Halflings");
+            removeHeaderButton.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "/Resources/#GLYPHICONS Halflings");
             removeHeaderButton.ToolTip = "Remove Header";
             removeHeaderButton.Foreground = Brushes.DarkRed;
             removeHeaderButton.FontSize = 16;
