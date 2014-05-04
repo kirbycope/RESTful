@@ -54,6 +54,8 @@ namespace RESTful
             // Get the password TextBox
             TextBox passwordTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 2 && Grid.GetColumn(c) == 1);
 
+            // http://en.wikipedia.org/wiki/Basic_access_authentication#Client_side
+
             // Encode the username:password
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(String.Format("{0}:{1}", usernameTextBox.Text, passwordTextBox.Text));
             string encodedCredentials = System.Convert.ToBase64String(plainTextBytes);

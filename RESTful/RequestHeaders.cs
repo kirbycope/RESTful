@@ -29,6 +29,18 @@ namespace RESTful
             }
             else if (((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString() == "DIGEST")
             {
+                // Get the encoded header
+                KeyValuePair<string, string> kvp = DigestAuth.GetInputs();
+
+                // Add authentication header to dictionary
+                dict.Add(kvp.Key, kvp.Value);
+            }
+            else if (((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString() == "OAuth1")
+            {
+                //
+            }
+            else if (((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString() == "OAuth2")
+            {
                 //
             }
 

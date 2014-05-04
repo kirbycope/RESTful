@@ -61,12 +61,12 @@ namespace RESTful
 
         private void SaveRequest_Click(object sender, MouseButtonEventArgs e)
         {
-
+            //
         }
 
         private void OpenRequest_Click(object sender, MouseButtonEventArgs e)
         {
-
+            //
         }        
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)

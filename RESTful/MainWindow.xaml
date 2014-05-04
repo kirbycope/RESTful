@@ -30,13 +30,13 @@
                 </TextBlock.Foreground>
             </Label>
             <!-- Save button -->
-            <Label Grid.Row="0" Grid.Column="1" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" ToolTip="Save Request" MouseDown="SaveRequest_Click" VerticalAlignment="Bottom">&#57714;
+            <Label Grid.Row="0" Grid.Column="1" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" ToolTip="Save Request" MouseDown="SaveRequest_Click" VerticalAlignment="Bottom" Visibility="Hidden">&#57714;
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
                 </TextBlock.Foreground>
             </Label>
             <!-- Open button -->
-            <Label Grid.Row="0" Grid.Column="2" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Open Request" MouseDown="OpenRequest_Click">&#57624;
+            <Label Grid.Row="0" Grid.Column="2" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Open Request" MouseDown="OpenRequest_Click" Visibility="Hidden">&#57624;
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
                 </TextBlock.Foreground>
