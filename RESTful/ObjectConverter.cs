@@ -43,7 +43,14 @@ namespace RESTful
                 {
                     if (pi.Name == p.Key)
                     {
-                        pi.SetValue(instance, Convert.ChangeType(p.Value, pi.PropertyType), null);
+                        try
+                        {
+                            pi.SetValue(instance, Convert.ChangeType(p.Value, pi.PropertyType), null);
+                        }
+                        catch (InvalidCastException e)
+                        {
+                            pi.SetValue(instance, Enum.ToObject(pi.PropertyType, Convert.ToInt32(p.Value)), null);
+                        }
                     }
                 }
             }
@@ -91,7 +98,14 @@ namespace RESTful
                 {
                     if (pi.Name == p.Key)
                     {
-                        pi.SetValue(instance, Convert.ChangeType(p.Value, pi.PropertyType), null);
+                        try
+                        {
+                            pi.SetValue(instance, Convert.ChangeType(p.Value, pi.PropertyType), null);
+                        }
+                        catch (InvalidCastException e)
+                        {
+                            pi.SetValue(instance, Enum.ToObject(pi.PropertyType, Convert.ToInt32(p.Value)), null);
+                        }
                     }
                 }
             }
