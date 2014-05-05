@@ -15,7 +15,7 @@ namespace RESTful
         {
             get
             {
-                if ((_ReflectedType == null) && (ReflectedAssembly.Assembly != null))
+                if (ReflectedAssembly.Assembly != null)
                 {
                     // Get the selected value from x:Name="Types"
                     string selectedType = ((MainWindow)System.Windows.Application.Current.MainWindow).Types.SelectedValue.ToString();
