@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -66,6 +67,19 @@ namespace RESTful
                 if (request.Assembly != null)
                 {
                     ((MainWindow)System.Windows.Application.Current.MainWindow).AssemblyPath.Text = request.Assembly;
+
+                    // Load the imported assembly
+                    Assembly importedAssembly = ReflectedAssembly.Assembly;
+
+                    // Build a List of strings, containing the options
+                    List<string> types = new List<string>();
+                    foreach (Type t in importedAssembly.GetTypes())
+                    {
+                        types.Add(t.ToString());
+                    }
+
+                    // Assign the ItemsSource to the list for x:Name="Types"
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).Types.ItemsSource = types;
                 }
 
                 // Type
