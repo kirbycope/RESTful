@@ -75,6 +75,7 @@
       <HintPath>..\..\..\..\GitHub\RESTful\packages\Microsoft.AspNet.WebApi.Client.5.1.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -93,14 +94,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AuthenticationDataElement.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="EncodingFormats.cs" />
+    <Compile Include="HeaderDataElement.cs" />
+    <Compile Include="LoadRequest.cs" />
     <Compile Include="ObjectConverter.cs" />
+    <Compile Include="ParameterDataElement.cs" />
     <Compile Include="ReflectedAssembly.cs" />
     <Compile Include="ReflectedProperties.cs" />
     <Compile Include="ReflectedType.cs" />
+    <Compile Include="Request.cs" />
     <Compile Include="RequestBody.cs" />
     <Compile Include="RequestHeaders.cs" />
+    <Compile Include="SaveRequest.cs" />
     <Compile Include="SendRequest.cs" />
     <Compile Include="Templates.cs" />
     <Compile Include="UriParameters.cs" />

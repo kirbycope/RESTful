@@ -61,12 +61,37 @@ namespace RESTful
 
         private void SaveRequest_Click(object sender, MouseButtonEventArgs e)
         {
-            //
+            // Configure save file dialog box
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.DefaultExt = ".rest";
+            dlg.Filter = "RESTful binary (*.rest)|*.rest";
+            dlg.AddExtension = true;
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results 
+            if (result == true)
+            {
+                SaveRequest.ToBinary(dlg.FileName);
+            }
         }
 
         private void OpenRequest_Click(object sender, MouseButtonEventArgs e)
         {
-            //
+            // Configure open file dialog box
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".rest";
+            dlg.Filter = "RESTful binary (*.rest)|*.rest";
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results 
+            if (result == true)
+            {
+                LoadRequest.FromBinary(dlg.FileName);
+            }
         }        
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
