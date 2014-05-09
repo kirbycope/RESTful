@@ -31,7 +31,7 @@ namespace RESTful
                 }
 
                 // Authentication Fields
-                //request.AuthenticationFields
+                AuthenticationFields.AuthenticationDataElementToGrid(request);
 
                 // Protocol
                 if (request.Protocol != null)
@@ -71,15 +71,18 @@ namespace RESTful
                     // Load the imported assembly
                     Assembly importedAssembly = ReflectedAssembly.Assembly;
 
-                    // Build a List of strings, containing the options
-                    List<string> types = new List<string>();
-                    foreach (Type t in importedAssembly.GetTypes())
+                    if (importedAssembly != null)
                     {
-                        types.Add(t.ToString());
-                    }
+                        // Build a List of strings, containing the options
+                        List<string> types = new List<string>();
+                        foreach (Type t in importedAssembly.GetTypes())
+                        {
+                            types.Add(t.ToString());
+                        }
 
-                    // Assign the ItemsSource to the list for x:Name="Types"
-                    ((MainWindow)System.Windows.Application.Current.MainWindow).Types.ItemsSource = types;
+                        // Assign the ItemsSource to the list for x:Name="Types"
+                        ((MainWindow)System.Windows.Application.Current.MainWindow).Types.ItemsSource = types;
+                    }
                 }
 
                 // Type

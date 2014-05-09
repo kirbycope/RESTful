@@ -39,6 +39,7 @@ namespace RESTful
                 Label label = new Label();
                 label.SetValue(Grid.RowProperty, i + 1);
                 label.SetValue(Grid.ColumnProperty, 0);
+                label.Name = "AuthenticationKey" + i;
                 label.Content = fields[i] + ":";
                 AuthenticationGrid.Children.Add(label);
 
@@ -46,6 +47,7 @@ namespace RESTful
                 TextBox textBox = new TextBox();
                 textBox.SetValue(Grid.RowProperty, i + 1);
                 textBox.SetValue(Grid.ColumnProperty, 1);
+                textBox.Name = "AuthenticationValue" + i;
                 AuthenticationGrid.Children.Add(textBox);
             }
         }

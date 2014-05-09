@@ -95,6 +95,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AuthenticationDataElement.cs" />
+    <Compile Include="AuthenticationFields.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="EncodingFormats.cs" />
     <Compile Include="HeaderDataElement.cs" />

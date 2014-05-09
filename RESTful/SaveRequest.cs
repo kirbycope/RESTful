@@ -21,7 +21,7 @@ namespace RESTful
                 }
                 
                 // Authentication Fields
-                //request.AuthenticationFields = new AuthenticationDataElement[] {new AuthenticationDataElement()};
+                request.AuthenticationFields = AuthenticationFields.GridToAuthenticationDataElement();
                 
                 // Protocol
                 if (((MainWindow)System.Windows.Application.Current.MainWindow).ProtocolVersion.SelectedValue != null)
