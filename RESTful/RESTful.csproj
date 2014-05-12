@@ -99,9 +99,11 @@
     <Compile Include="Client.cs" />
     <Compile Include="EncodingFormats.cs" />
     <Compile Include="HeaderDataElement.cs" />
+    <Compile Include="HeaderFields.cs" />
     <Compile Include="LoadRequest.cs" />
     <Compile Include="ObjectConverter.cs" />
     <Compile Include="ParameterDataElement.cs" />
+    <Compile Include="ParameterFields.cs" />
     <Compile Include="ReflectedAssembly.cs" />
     <Compile Include="ReflectedProperties.cs" />
     <Compile Include="ReflectedType.cs" />

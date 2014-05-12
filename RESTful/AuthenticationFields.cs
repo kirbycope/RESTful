@@ -10,6 +10,42 @@ namespace RESTful
 {
     class AuthenticationFields
     {
+        public static void GenerateFields()
+        {
+            // Create empty string to hold the selected value
+            string authenticationMethod = null;
+
+            if (((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue != null)
+            {
+                // Get the selected authentication method
+                authenticationMethod = ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString();
+            }
+
+            if ((authenticationMethod != null) && (authenticationMethod != ""))
+            {
+                if (authenticationMethod == "Basic")
+                {
+                    // Generate fields
+                    BasicAuth.GenereateFields();
+                }
+                else if (authenticationMethod == "Digest")
+                {
+                    // Generate fields
+                    DigestAuth.GenereateFields();
+                }
+                else if (authenticationMethod == "OAuth1")
+                {
+                    // Generate fields
+                    OAuth1.GenereateFields();
+                }
+                else if (authenticationMethod == "OAuth2")
+                {
+                    // Generate fields
+                    OAuth2.GenereateFields();
+                }
+            }
+        }
+
         public static AuthenticationDataElement[] GridToAuthenticationDataElement()
         {
             // Get the AuthenticationGrid from the MainWindow
@@ -83,44 +119,14 @@ namespace RESTful
 
         public static void AuthenticationDataElementToGrid(Request request)
         {
-            // Generate Fields
-            string authenticationMethod = null;
-
-            if (((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue != null)
-            {
-                // Get the selected authentication method
-                authenticationMethod = ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString();
-            }
-
-            if ((authenticationMethod != null) && (authenticationMethod != ""))
-            {
-                if (authenticationMethod == "Basic")
-                {
-                    // Populate fields
-                    BasicAuth.GenereateFields();
-                }
-                else if (authenticationMethod == "Digest")
-                {
-                    // Populate fields
-                    DigestAuth.GenereateFields();
-                }
-                else if (authenticationMethod == "OAuth1")
-                {
-                    // Populate fields
-                    OAuth1.GenereateFields();
-                }
-                else if (authenticationMethod == "OAuth2")
-                {
-                    // Populate fields
-                    OAuth2.GenereateFields();
-                }
-            }
+            // Generate Autherntication Fields
+            AuthenticationFields.GenerateFields();
 
             // Get the AuthenticationGrid from the MainWindow
             Grid AuthenticationGrid = ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationGrid;
 
             // Populate Fields, skiping the first two UIElements
-            for (int i = 2; i < AuthenticationGrid.Children.Count; i++ )
+            for (int i = 2; i < AuthenticationGrid.Children.Count; i++)
             {
                 // Check if the next UIElement is a Label
                 if (AuthenticationGrid.Children.Cast<UIElement>().ElementAt(i).GetType() == typeof(Label))

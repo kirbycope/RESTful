@@ -39,10 +39,10 @@ namespace RESTful
                 request.URI = ((MainWindow)System.Windows.Application.Current.MainWindow).URI.Text;
                 
                 // Parameters
-                //request.Parameters = new ParameterDataElement[] { new ParameterDataElement() };
+                request.Parameters = ParameterFields.GridToParameterDataElement();
                 
                 // Headers
-                //request.Headers = new HeaderDataElement[] { new HeaderDataElement() };
+                request.Headers = HeaderFields.GridToHeaderDataElement();
                 
                 // Attachment
                 request.Attachment = ((MainWindow)System.Windows.Application.Current.MainWindow).AttachmentPath.Text;

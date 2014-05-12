@@ -90,6 +90,10 @@ namespace RESTful
             // Process open file dialog box results 
             if (result == true)
             {
+                // Clear any existing fields
+                NewRequest_Click(sender, e);
+
+                // Load vaules into fields
                 LoadRequest.FromBinary(dlg.FileName);
             }
         }        
@@ -111,57 +115,11 @@ namespace RESTful
 
         private void AuthenticationMethod_DropDownClosed(object sender, EventArgs e)
         {
-            string authenticationMethod = null;
+            // Clear existing fields
+            ClearAuthenticationFields();
 
-            if (AuthenticationMethod.SelectedValue != null)
-            {
-                // Get the selected authentication method
-                authenticationMethod = AuthenticationMethod.SelectedValue.ToString();
-            }
-            
-            if ((authenticationMethod != null) && (authenticationMethod != ""))
-            {
-                if (authenticationMethod == "None")
-                {
-                    if (AuthenticationGrid.RowDefinitions.Count > 1)
-                    {
-                        // Clear existing fields
-                        ClearAuthenticationFields();
-                    }
-                }
-                else if (authenticationMethod == "Basic")
-                {
-                    // Clear existing fields
-                    ClearAuthenticationFields();
-                    
-                    // Populate fields
-                    BasicAuth.GenereateFields();
-                }
-                else if (authenticationMethod == "Digest")
-                {
-                    // Clear existing fields
-                    ClearAuthenticationFields();
-
-                    // Populate fields
-                    DigestAuth.GenereateFields();
-                }
-                else if (authenticationMethod == "OAuth1")
-                {
-                    // Clear existing fields
-                    ClearAuthenticationFields();
-
-                    // Populate fields
-                    OAuth1.GenereateFields();
-                }
-                else if (authenticationMethod == "OAuth2")
-                {
-                    // Clear existing fields
-                    ClearAuthenticationFields();
-
-                    // Populate fields
-                    OAuth2.GenereateFields();
-                }
-            }
+            // Generate Autherntication Fields
+            AuthenticationFields.GenerateFields();
         }
 
         private void ClearAuthenticationFields()
@@ -221,7 +179,7 @@ namespace RESTful
             }
         }
 
-        private void RemoveParameter_Click(object sender, MouseButtonEventArgs e)
+        public void RemoveParameter_Click(object sender, MouseButtonEventArgs e)
         {
             // Get the Label reference
             Label removeParameterLabel = sender as Label;
@@ -242,43 +200,7 @@ namespace RESTful
 
         private void AddParameter_Click(object sender, MouseButtonEventArgs e)
         {
-            // Get Current Header count
-            int headerCount = ParametersGrid.RowDefinitions.Count();
-
-            // Add a header/key textbox
-            TextBox header = new TextBox();
-            header.SetValue(Grid.RowProperty, headerCount - 1);
-            header.SetValue(Grid.ColumnProperty, 0);
-            header.Name = String.Format("requestParameterKey{0}", headerCount);
-            ParametersGrid.Children.Add(header);
-
-            // Add a value textbox
-            TextBox value = new TextBox();
-            value.SetValue(Grid.RowProperty, headerCount - 1);
-            value.SetValue(Grid.ColumnProperty, 1);
-            value.Name = String.Format("requestParameterValue{0}", headerCount);
-            ParametersGrid.Children.Add(value);
-
-            // Add the remove button
-            Label removeParameterButton = new Label();
-            removeParameterButton.SetValue(Grid.RowProperty, headerCount - 1);
-            removeParameterButton.SetValue(Grid.ColumnProperty, 2);
-            removeParameterButton.MouseDown += RemoveParameter_Click;
-            removeParameterButton.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "/Resources/#GLYPHICONS Halflings");
-            removeParameterButton.ToolTip = "Remove Parameter";
-            removeParameterButton.Foreground = Brushes.DarkRed;
-            removeParameterButton.FontSize = 16;
-            removeParameterButton.Content = "\ue083";  //"&#57475;"
-            removeParameterButton.HorizontalAlignment = HorizontalAlignment.Center;
-            ParametersGrid.Children.Add(removeParameterButton);
-
-            // Add a row to the ParametersGrid
-            RowDefinition rowDefinition = new RowDefinition();
-            rowDefinition.Height = GridLength.Auto;
-            ParametersGrid.RowDefinitions.Add(rowDefinition);
-
-            // Move the Add Header button down a row
-            AddParameter.SetValue(Grid.RowProperty, (headerCount + 1));
+            ParameterFields.AddField();
         }
 
         private void RemoveAllHeaders_Click(object sender, MouseButtonEventArgs e)
@@ -308,7 +230,7 @@ namespace RESTful
             }
         }
 
-        public void RemoveHeader_Click(object sender, MouseButtonEventArgs e) // Needs work on removing children
+        public void RemoveHeader_Click(object sender, MouseButtonEventArgs e)
         {
             // Get the Label reference
             Label removeHeaderLabel = sender as Label;
@@ -329,43 +251,7 @@ namespace RESTful
 
         private void AddHeader_Click(object sender, MouseButtonEventArgs e)
         {
-            // Get Current Header count
-            int headerCount = HeadersGrid.RowDefinitions.Count();
-
-            // Add a header/key textbox
-            TextBox header = new TextBox();
-            header.SetValue(Grid.RowProperty, headerCount - 1);
-            header.SetValue(Grid.ColumnProperty, 0);
-            header.Name = String.Format("requestHeaderKey{0}", headerCount);
-            HeadersGrid.Children.Add(header);
-
-            // Add a value textbox
-            TextBox value = new TextBox();
-            value.SetValue(Grid.RowProperty, headerCount -1);
-            value.SetValue(Grid.ColumnProperty, 1);
-            value.Name = String.Format("requestHeaderValue{0}", headerCount);
-            HeadersGrid.Children.Add(value);
-
-            // Add the remove button
-            Label removeHeaderButton = new Label();
-            removeHeaderButton.SetValue(Grid.RowProperty, headerCount - 1);
-            removeHeaderButton.SetValue(Grid.ColumnProperty, 2);
-            removeHeaderButton.MouseDown += RemoveHeader_Click;
-            removeHeaderButton.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "/Resources/#GLYPHICONS Halflings");
-            removeHeaderButton.ToolTip = "Remove Header";
-            removeHeaderButton.Foreground = Brushes.DarkRed;
-            removeHeaderButton.FontSize = 16;
-            removeHeaderButton.Content = "\ue083";  //"&#57475;"
-            removeHeaderButton.HorizontalAlignment = HorizontalAlignment.Center;
-            HeadersGrid.Children.Add(removeHeaderButton);
-
-            // Add a row to the HeadersGrid
-            RowDefinition rowDefinition = new RowDefinition();
-            rowDefinition.Height = GridLength.Auto;
-            HeadersGrid.RowDefinitions.Add(rowDefinition);
-
-            // Move the Add Header button down a row
-            AddHeader.SetValue(Grid.RowProperty, (headerCount + 1));
+            HeaderFields.AddField();
         }
 
         private void AttachmentBrowse_Click(object sender, RoutedEventArgs e)
