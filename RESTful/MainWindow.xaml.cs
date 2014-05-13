@@ -47,16 +47,18 @@ namespace RESTful
             RemoveAllHeaders_Click(sender, e);
             // Clear Attachment
             AttachmentPath.Text = "";
+            Types.SelectedIndex = -1;
+            Formats.SelectedIndex = -1;
             // Clear Body
             RequestBody.Text = "";
+            // Clear Response
+            ResponseHeader.Text = "";
+            ResponseBody.Text = "";
             // Clear Errors/Warnings
             Warnings.Opacity = 0;
             ValidationWarnings.Text = "";
             Errors.Opacity = 0;
             ValidationErrors.Text = "";
-            // Clear Response
-            ResponseHeader.Text = "";
-            ResponseBody.Text = "";
         }
 
         private void SaveRequest_Click(object sender, MouseButtonEventArgs e)
@@ -341,11 +343,11 @@ namespace RESTful
             // Validate user inputs
             ValidateFields.VerifyInputs();
 
-            // Add Parameters to URI
-            UriParameters.AddToURI();
-
             // Send the request
             HttpResponseMessage result = SendRequest.Send();
+
+            // Expand Response Expander
+            ResponseExpander.IsExpanded = true;
 
             // Check result
             if (result != null)
@@ -353,9 +355,6 @@ namespace RESTful
                 // Write the result to the text blocks x:Name="ResponseHeader" and x:Name="ResponseBody"
                 ResponseHeader.Text = result.Headers.ToString();
                 ResponseBody.Text = result.Content.ReadAsStringAsync().Result;
-
-                // Expand Response Expander
-                ResponseExpander.IsExpanded = true;
             }
             else
             {

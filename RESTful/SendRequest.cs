@@ -84,7 +84,6 @@ namespace RESTful
 
                     // Convert the Request Body to an object
                     object body = RequestBody.ToObject(requestBody);
-                    
 
                     // Convert the object to a serialized JSON string
                     string bodyJSON = JsonConvert.SerializeObject(body);
