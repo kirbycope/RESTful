@@ -13,10 +13,10 @@ namespace RESTful
         public static string AddToURI()
         {
             // Get the ParametersGrid from the MainWindow
-            Grid ParametersGrid = ((MainWindow)System.Windows.Application.Current.MainWindow).HeadersGrid;
+            Grid ParametersGrid = ((MainWindow)System.Windows.Application.Current.MainWindow).ParametersGrid;
 
-            // Create a string to hold the return value
-            string URI = "";
+            // Get current URI
+            string URI = ((MainWindow)System.Windows.Application.Current.MainWindow).URI.Text;
 
             // Ensure there are parameters
             if (ParametersGrid.Children.Count > 4)
@@ -73,18 +73,15 @@ namespace RESTful
                 // Add items in dictionary to URI
                 if (dict != null)
                 {
-                    // Get current URI
-                    string uri = ((MainWindow)System.Windows.Application.Current.MainWindow).URI.Text;
-
-                    StringBuilder sb = new StringBuilder(uri);
+                    StringBuilder sb = new StringBuilder(URI);
                     {
                         foreach (KeyValuePair<string, string> pair in dict)
                         {
                             // Make sure the same key isn't added twice
-                            if (uri.Contains(pair.Key) == false)
+                            if (URI.Contains(pair.Key) == false)
                             {
                                 // See if query string was started by the user
-                                if (uri.Contains("?"))
+                                if (URI.Contains("?"))
                                 {
 
                                     sb.Append(String.Format("&{0}={1}", pair.Key, pair.Value));
