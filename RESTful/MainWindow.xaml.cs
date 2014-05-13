@@ -335,6 +335,9 @@ namespace RESTful
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
+            // Collapse Response Expander
+            ResponseExpander.IsExpanded = false;
+            
             // Validate user inputs
             ValidateFields.VerifyInputs();
 

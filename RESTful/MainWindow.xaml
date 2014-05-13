@@ -309,11 +309,8 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content=""></Label>
                     <Button Grid.Row="1" Grid.Column="1" Content="Submit" Click="Submit_Click"></Button>
-                    <Label Grid.Row="2" Grid.Column="0" x:Name="Warnings" Content="Warnings:" Opacity="0"/>
-                    <Label Grid.Row="2" Grid.Column="2" x:Name="Errors" Content="Errors:" Opacity="0"></Label>
-                    <TextBlock Grid.Row="3" Grid.Column="0" x:Name="ValidationWarnings" TextWrapping="Wrap"></TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="2" x:Name="ValidationErrors" TextWrapping="Wrap"></TextBlock>
-                </Grid>
+                    <Label Grid.Row="2" Grid.Column="0" Content=" " Opacity="0"/>
+                    </Grid>
             </Expander>
             <!-- Response-->
             <Expander x:Name="ResponseExpander" Grid.Row="9" Grid.Column="0">
@@ -328,7 +325,10 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width=".25*"/>
                         <ColumnDefinition Width=".75*"/>
@@ -337,7 +337,11 @@
                     <TextBox Grid.Row="0" Grid.Column="1" x:Name="ResponseHeader" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" MaxHeight="150" VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
                     <Label Grid.Row="1" Grid.Column="0" Content="Response Body:"></Label>
                     <TextBox Grid.Row="1" Grid.Column="1" x:Name="ResponseBody" TextWrapping="Wrap" AcceptsReturn="True" Height="Auto" MaxHeight="200" VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
-                </Grid>
+                    <Label Grid.Row="2" Grid.Column="0" x:Name="Warnings" Content="Warnings:" Opacity="0"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="ValidationWarnings" TextWrapping="Wrap"></TextBlock>
+                    <Label Grid.Row="3" Grid.Column="0" x:Name="Errors" Content="Errors:" Opacity="0"></Label>
+                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="ValidationErrors" TextWrapping="Wrap"></TextBlock>
+                    </Grid>
             </Expander>
         </Grid>
     </Grid>
