@@ -1,6 +1,7 @@
 ﻿<Window x:Name="RESTful" x:Class="RESTful.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Icon="./Resources/RESTful.ico"
         Title="RESTful" Height="320" Width="700" MinHeight="320" MinWidth="700">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
     <!-- Parent Grid-->
