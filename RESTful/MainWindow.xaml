@@ -25,25 +25,58 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!-- New Request button -->
-            <Label Grid.Row="0" Grid.Column="0" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="New Request" MouseDown="NewRequest_Click">&#57378;
-                <TextBlock.Foreground>
-                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
-                </TextBlock.Foreground>
-            </Label>
+            <Control Grid.Row="0" Grid.Column="0">
+                <Control.Template>
+                    <ControlTemplate>
+                        <Label x:Name="NewRequest" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" ToolTip="New Request" MouseDown="NewRequest_Click">&#57378;
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
+                            </TextBlock.Foreground>
+                        </Label>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="NewRequest" Property="Foreground" Value="Red"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Control.Template>
+            </Control>
             <!-- Save button -->
-            <Label Grid.Row="0" Grid.Column="1" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" ToolTip="Save Request" MouseDown="SaveRequest_Click" VerticalAlignment="Bottom">&#57714;
-                <TextBlock.Foreground>
-                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
-                </TextBlock.Foreground>
-            </Label>
+            <Control Grid.Row="0" Grid.Column="1">
+                <Control.Template>
+                    <ControlTemplate>
+                        <Label  x:Name="SaveRequest" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" ToolTip="Save Request" MouseDown="SaveRequest_Click" VerticalAlignment="Bottom">&#57714;
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
+                            </TextBlock.Foreground>
+                        </Label>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="SaveRequest" Property="Foreground" Value="Red"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Control.Template>
+            </Control>
             <!-- Open button -->
-            <Label Grid.Row="0" Grid.Column="2" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Open Request" MouseDown="OpenRequest_Click">&#57624;
-                <TextBlock.Foreground>
-                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
-                </TextBlock.Foreground>
-            </Label>
+            <Control Grid.Row="0" Grid.Column="2">
+                <Control.Template>
+                    <ControlTemplate>
+                        <Label x:Name="LoadRequest" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" ToolTip="Open Request" MouseDown="OpenRequest_Click">&#57624;
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
+                            </TextBlock.Foreground>
+                        </Label>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="LoadRequest" Property="Foreground" Value="Red"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Control.Template>
+            </Control>
             <!-- Info button -->
-            <TextBlock  Grid.Row="0" Grid.Column="3" Margin="3" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Center" ToolTip="About">
+            <TextBlock  Grid.Row="0" Grid.Column="3" Margin="3" FontFamily="/RESTful;component/Resources/#GLYPHICONS Halflings" FontSize="24" HorizontalAlignment="Right" ToolTip="About">
                 <Hyperlink NavigateUri="https://github.com/kirbycope/RESTful/wiki" RequestNavigate="Hyperlink_RequestNavigate" TextDecorations="{x:Null}">&#57478;</Hyperlink>
                 <TextBlock.Foreground>
                     <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.HotTrackColorKey}}"/>
