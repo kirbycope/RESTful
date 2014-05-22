@@ -51,5 +51,42 @@ namespace RESTful
                 AuthenticationGrid.Children.Add(textBox);
             }
         }
+
+        public static KeyValuePair<string, string> GetInputs()
+        {
+            // Get the Grid from the MainWindow
+            Grid AuthenticationGrid = ((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationGrid;
+
+            // Get the Consumer Key TextBox
+            TextBox consumerKeyTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 1 && Grid.GetColumn(c) == 1);
+
+            // Get the Consumer Secret TextBox
+            TextBox consumerSecretTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 2 && Grid.GetColumn(c) == 1);
+
+            // Get the Token TextBox
+            TextBox tokenTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 3 && Grid.GetColumn(c) == 1);
+
+            // Get the Token Secret TextBox
+            TextBox tokenSecretTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 4 && Grid.GetColumn(c) == 1);
+
+            // Get the Signature Method TextBox
+            TextBox signatureMethodTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 5 && Grid.GetColumn(c) == 1);
+
+            // Get the Timestamp TextBox
+            TextBox timestampTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 6 && Grid.GetColumn(c) == 1);
+
+            // Get the Nonce TextBox
+            TextBox nonceTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 7 && Grid.GetColumn(c) == 1);
+
+            // Get the Version TextBox
+            TextBox versionTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 8 && Grid.GetColumn(c) == 1);
+
+            // Get the Realm TextBox
+            TextBox realmTextBox = (TextBox)AuthenticationGrid.Children.Cast<UIElement>().First(c => Grid.GetRow(c) == 9 && Grid.GetColumn(c) == 1);
+
+            // http://tools.ietf.org/html/rfc5849
+
+            return new KeyValuePair<string, string>();
+        }
     }
 }

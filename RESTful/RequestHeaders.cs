@@ -37,7 +37,8 @@ namespace RESTful
             }
             else if (((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString() == "OAuth1")
             {
-                //
+                // Get the encoded header
+                KeyValuePair<string, string> kvp = OAuth1.GetInputs();
             }
             else if (((MainWindow)System.Windows.Application.Current.MainWindow).AuthenticationMethod.SelectedValue.ToString() == "OAuth2")
             {
